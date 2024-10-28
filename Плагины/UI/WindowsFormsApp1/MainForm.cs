@@ -14,7 +14,7 @@ namespace RoomAreaPlugin
         {
             // Основная форма
             this.Text = "Площади помещений";
-            this.Width = 500;
+            this.Width = 600;
             this.Height = 600;
 
             // Checkbox "Групп-вать"
@@ -33,29 +33,33 @@ namespace RoomAreaPlugin
             TreeView treeViewFloors = new TreeView { Left = 10, Top = 100, Width = 200, Height = 300 };
 
             // Параметры справа
-            ComboBox cmbApartmentNumber = new ComboBox { Left = 250, Top = 40, Width = 200 };
-            ComboBox cmbRoomType = new ComboBox { Left = 250, Top = 80, Width = 200 };
-            TextBox txtDecimalPlaces = new TextBox { Left = 250, Top = 120, Width = 50 };
+            ComboBox cmbApartmentNumber = new ComboBox { Left = 300, Top = 40, Width = 200 };
+            ComboBox cmbRoomType = new ComboBox { Left = 300, Top = 80, Width = 200 };
+            TextBox txtDecimalPlaces = new TextBox { Left = 300, Top = 120, Width = 50 };
 
             // CheckBox для дополнительных параметров
-            CheckBox chkIncludeStorage = new CheckBox { Text = "Включить кладовые квартиры", Left = 250, Top = 160, Width = 200 };
-            CheckBox chkDisableCoefficient = new CheckBox { Text = "Убрать расчет с коэффициентом", Left = 250, Top = 190, Width = 200 };
-            CheckBox chkUseSystemArea = new CheckBox { Text = "Использовать системный параметр площади", Left = 250, Top = 220, Width = 250, Checked = true };
+            CheckBox chkIncludeStorage = new CheckBox { Text = "Включить кладовые квартиры", Left = 300, Top = 160, Width = 200 };
+            CheckBox chkDisableCoefficient = new CheckBox { Text = "Убрать расчет с коэффициентом", Left = 300, Top = 190, Width = 200 };
+            
+            CheckBox chkUseSystemArea = new CheckBox { Text = "Использовать системный параметр площади", Left = 300, Top = 220, Width = 250, Checked = true };
+            ComboBox cmbUseSystemArea = new ComboBox { Left = 300, Top = 250, Width = 250 };
 
             // Кнопки управления
             Button btnSelectAll = new Button { Text = "Выбрать все", Left = 10, Top = 420, Width = 100 };
             Button btnReset = new Button { Text = "Сбросить", Left = 120, Top = 420, Width = 100 };
             Button btnExpandAll = new Button { Text = "Раскрыть все", Left = 10, Top = 460, Width = 100 };
             Button btnCollapseAll = new Button { Text = "Спрятать все", Left = 120, Top = 460, Width = 100 };
-            Button btnSettings = new Button { Text = "Настройка коэффициента", Left = 250, Top = 260, Width = 200 };
+            Button btnSettings = new Button { Text = "Настройка коэффициента", Left = 300, Top = 290, Width = 200 };
             Button btnOk = new Button { Text = "OK", Left = 350, Top = 500, Width = 100 };
 
             // Добавление событий
             btnSettings.Click += BtnSettings_Click;
             btnSelectAll.Click += BtnSelectAll_Click;
             btnReset.Click += BtnReset_Click;
+            btnOk.Click += BtnOk_Click;
 
             // Добавление элементов на форму
+
             this.Controls.Add(chkGroupBy);
             this.Controls.Add(cmbGroupBy);
             this.Controls.Add(chkFilter1);
@@ -69,12 +73,20 @@ namespace RoomAreaPlugin
             this.Controls.Add(chkIncludeStorage);
             this.Controls.Add(chkDisableCoefficient);
             this.Controls.Add(chkUseSystemArea);
+            this.Controls.Add(cmbUseSystemArea);
             this.Controls.Add(btnSelectAll);
             this.Controls.Add(btnReset);
             this.Controls.Add(btnExpandAll);
             this.Controls.Add(btnCollapseAll);
             this.Controls.Add(btnSettings);
             this.Controls.Add(btnOk);
+        }
+
+        private void BtnOk_Click(object sender, EventArgs e)
+        {
+            // TODO Логика сохранения
+            throw new NotImplementedException("Логика сохранения");
+            this.Close();
         }
 
         private void BtnSettings_Click(object sender, EventArgs e)

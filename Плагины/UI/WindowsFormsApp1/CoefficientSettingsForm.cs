@@ -63,8 +63,8 @@ namespace RoomAreaPlugin
         private void BtnSave_Click(object sender, EventArgs e)
         {
             // TODO Логика сохранения коэффициентов
-            this.Close();
             throw new NotImplementedException("Логика сохранения коэффициентов");
+            this.Close();
         }
     }
 }
