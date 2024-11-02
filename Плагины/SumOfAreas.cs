@@ -259,9 +259,6 @@ namespace RoomAreaPlugin
         }
     }
 
-    /// <summary>
-    /// Класс просто для удобства, здесь хранятся ноды, которые надо добавлять на TreeView
-    /// </summary>
     public partial class CoefficientSettingsForm : Form
     {
         public CoefficientSettingsForm()
@@ -327,6 +324,9 @@ namespace RoomAreaPlugin
         }
     }
 
+    /// <summary>
+    /// Класс просто для удобства, здесь хранятся ноды, которые надо добавлять на TreeView
+    /// </summary>
     public static class NodeHelper
     {
         static HashSet<string> Floors = new HashSet<string>();
