@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Runtime.Serialization;
 using RoomAreaNC;
 using RoomAreaPlugin;
+using System.Reflection;
 namespace RoomAreaNC
 {
     public enum RoomType
@@ -56,7 +57,7 @@ namespace RoomAreaNC
             var tmp = room.Number.Split(';').Select(z => z.Trim()).ToArray();
 
             try
-            { 
+            {
                 var floor = tmp[0];
                 var appartment = tmp[1];
                 var number = tmp[2];
@@ -89,15 +90,15 @@ namespace RoomAreaNC
 
             HostMgd.ApplicationServices.Application.ShowModalDialog(form);
 
-            NodeHelper.FloorNodes.ForEach(z => HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(string.Join(" ","Floor", z.Text)));
-            NodeHelper.ApartmentNodes.ForEach(z => HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(string.Join(" ","Apartment", z.Text)));
+            NodeHelper.FloorNodes.ForEach(z => HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(string.Join(" ", "Floor", z.Text)));
+            NodeHelper.ApartmentNodes.ForEach(z => HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(string.Join(" ", "Apartment", z.Text)));
             NodeHelper.RoomNodes.ForEach(z => HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(string.Join(" ", "Number", z.Text)));
         }
 
         public static void CalculateArea(RoomInfo[] rooms) //Заглушка
         {
             var res = 0.0;
-            foreach(var e in rooms)
+            foreach (var e in rooms)
                 res += e.Area;
             // Получение ссылки на редактор докумена
             HostMgd.EditorInput.Editor ed = HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
@@ -135,6 +136,8 @@ namespace RoomAreaPlugin
         public delegate void SumChosenRooms(RoomInfo[] chosenRooms);
         public event SumChosenRooms ChoseRooms;
 
+        List<TreeNode> LastActiveNode;
+
         TreeView treeViewFloors;
 
         Dictionary<RoomType, double> Multiplicators;
@@ -142,6 +145,10 @@ namespace RoomAreaPlugin
         List<RoomInfo> ListOfRooms;
 
         public static MainForm Instance = new MainForm();
+
+
+
+
 
         public MainForm()
         {
@@ -156,9 +163,44 @@ namespace RoomAreaPlugin
         public void UpdateListOfRooms(List<RoomInfo> rooms)
         {
             ListOfRooms = rooms;
+            /*
             foreach (var e in ListOfRooms)
-                treeViewFloors.Nodes.Add(String.Join(" ", e.Floor, e.Apartment, e.Number, e.Type.ToString()));
+                treeViewFloors.Nodes.Add(String.Join(" ", e.Floor, e.Apartment, e.Number, e.Type.ToString()));*/
             NodeHelper.UpdateNodes(rooms); // Доставать ноды отсюда и пихать их в зависмости от группировки
+            //UpdateTreeView();
+            GroupByFloor();
+        }
+
+        public void UpdateTreeView(List<TreeNode> nodes, PropertyInfo property)
+        {
+            if (LastActiveNode == null)
+            {
+                /*
+                foreach (var e in NodeHelper.RoomNodes)
+                {
+                    treeViewFloors.Nodes.Add(e);
+                    HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(e.Text);
+                }
+                */
+                nodes.ForEach(z => treeViewFloors.Nodes.Add(z));
+                HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(nodes.Count.ToString());
+            }
+            else
+            {
+                var tmp = nodes.Join(LastActiveNode, r => property.GetValue(r.Tag), l => property.GetValue(l.Tag), (r, l) => new { R = r, L = l });
+                foreach (var e in tmp)
+                    e.L.Nodes.Add(e.R);
+            }
+            LastActiveNode = nodes;
+            treeViewFloors.Update();
+        }
+
+        public void GroupByFloor()
+        {
+            var tmp = typeof(RoomInfo).GetProperties().ToList();
+            foreach (var e in tmp) HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(e.Name);
+            UpdateTreeView(NodeHelper.FloorNodes, typeof(RoomInfo).GetProperty("Floor"));
+            UpdateTreeView(NodeHelper.RoomNodes, typeof(RoomInfo).GetProperty("Floor"));
         }
 
         private void InitializeComponent()
@@ -182,6 +224,7 @@ namespace RoomAreaPlugin
 
             // TreeView для этажей
             treeViewFloors = new TreeView { Left = 10, Top = 100, Width = 200, Height = 300 };
+            treeViewFloors.CheckBoxes = true;
 
             // Параметры справа
             ComboBox cmbApartmentNumber = new ComboBox { Left = 300, Top = 40, Width = 200 };
@@ -242,7 +285,7 @@ namespace RoomAreaPlugin
 
         private void BtnSettings_Click(object sender, EventArgs e)
         {
-           // var settingsForm = new CoefficientSettingsForm();
+            // var settingsForm = new CoefficientSettingsForm();
             //settingsForm.ShowDialog();
         }
 
@@ -344,14 +387,24 @@ namespace RoomAreaPlugin
         {
             foreach (var e in rooms)
             {
-                if(Floors.Add(e.Floor))
-                    FloorNodes.Add(new TreeNode(e.Floor));
-                if(Apartments.Add(e.Apartment))
-                    ApartmentNodes.Add(new TreeNode(e.Apartment));
-                HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(String.Join(" ", e.Floor,  e.Apartment, "sdaf", e.Number));
-                var room = new TreeNode(String.Join(" ",e.Number, e.Type.ToString()));
-                room.Tag = e;
-                RoomNodes.Add(room);
+                TreeNode tmp;
+
+                if (Floors.Add(e.Floor))
+                {
+                    tmp = new TreeNode(e.Floor);
+                    tmp.Tag = e;
+                    FloorNodes.Add(tmp);
+                }
+                if (Apartments.Add(e.Apartment))
+                {
+                    tmp = new TreeNode(e.Apartment);
+                    tmp.Tag = e;
+                    ApartmentNodes.Add(tmp);
+                }
+                HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(String.Join(" ", e.Floor, e.Apartment, "sdaf", e.Number));
+                tmp = new TreeNode(String.Join(" ", e.Number, e.Type.ToString()));
+                tmp.Tag = e;
+                RoomNodes.Add(tmp);
             }
 
         }
