@@ -105,15 +105,13 @@ namespace RoomAreaNC
 
             ed.WriteMessage(res.ToString());
         }
-
-
     }
 
     public class RoomInfo
     {
         public string Floor { get; private set; }
         public string Apartment { get; private set; }
-        public string Number { get; private set; }
+        public string Room { get; private set; }
         public double Area { get; private set; }
         public RoomType Type { get; private set; }
 
@@ -121,12 +119,11 @@ namespace RoomAreaNC
         {
             Floor = floor;
             Apartment = apartment;
-            Number = number;
+            Room = number;
             Area = area;
             Type = type;
         }
     }
-
 }
 
 namespace RoomAreaPlugin
@@ -137,6 +134,7 @@ namespace RoomAreaPlugin
         public event SumChosenRooms ChoseRooms;
 
         List<TreeNode> LastActiveNode;
+        PropertyInfo LastlyGroupedBy;
 
         TreeView treeViewFloors;
 
@@ -145,10 +143,6 @@ namespace RoomAreaPlugin
         List<RoomInfo> ListOfRooms;
 
         public static MainForm Instance = new MainForm();
-
-
-
-
 
         public MainForm()
         {
@@ -169,6 +163,8 @@ namespace RoomAreaPlugin
             NodeHelper.UpdateNodes(rooms); // Доставать ноды отсюда и пихать их в зависмости от группировки
             //UpdateTreeView();
             GroupByFloor();
+            GroupByApartment();
+            //GroupByRoom();
         }
 
         public void UpdateTreeView(List<TreeNode> nodes, PropertyInfo property)
@@ -183,24 +179,43 @@ namespace RoomAreaPlugin
                 }
                 */
                 nodes.ForEach(z => treeViewFloors.Nodes.Add(z));
-                HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(nodes.Count.ToString());
+                //HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(nodes.Count.ToString());
             }
             else
             {
-                var tmp = nodes.Join(LastActiveNode, r => property.GetValue(r.Tag), l => property.GetValue(l.Tag), (r, l) => new { R = r, L = l });
+
+                foreach (var e in LastActiveNode)
+                    e.Nodes.Clear();
+
+                var tmp = nodes.Join(LastActiveNode, r => LastlyGroupedBy.GetValue(r.Tag), l => LastlyGroupedBy.GetValue(l.Tag), (r, l) => new { R = r, L = l });
                 foreach (var e in tmp)
                     e.L.Nodes.Add(e.R);
             }
-            LastActiveNode = nodes;
+            LastlyGroupedBy = property;
+            if (nodes != NodeHelper.RoomNodes) LastActiveNode = nodes; //Тупость
             treeViewFloors.Update();
         }
 
         public void GroupByFloor()
         {
-            var tmp = typeof(RoomInfo).GetProperties().ToList();
-            foreach (var e in tmp) HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(e.Name);
             UpdateTreeView(NodeHelper.FloorNodes, typeof(RoomInfo).GetProperty("Floor"));
-            UpdateTreeView(NodeHelper.RoomNodes, typeof(RoomInfo).GetProperty("Floor"));
+            GroupByRoom();
+        }
+
+        public void GroupByApartment()
+        {
+            UpdateTreeView(NodeHelper.ApartmentNodes, typeof(RoomInfo).GetProperty("Apartment"));
+            GroupByRoom();
+        }
+
+        public void GroupByType()
+        {
+            throw new NotImplementedException();
+            //UpdateTreeView(NodeHelper., typeof(RoomInfo).GetProperty("Type"));
+        }
+        public void GroupByRoom()
+        {
+            UpdateTreeView(NodeHelper.RoomNodes, LastlyGroupedBy);
         }
 
         private void InitializeComponent()
@@ -275,7 +290,6 @@ namespace RoomAreaPlugin
             this.Controls.Add(btnSettings);
             this.Controls.Add(btnOk);
         }
-
         private void BtnOk_Click(object sender, EventArgs e)
         {
             // TODO Логика сохранения
@@ -401,8 +415,8 @@ namespace RoomAreaPlugin
                     tmp.Tag = e;
                     ApartmentNodes.Add(tmp);
                 }
-                HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(String.Join(" ", e.Floor, e.Apartment, "sdaf", e.Number));
-                tmp = new TreeNode(String.Join(" ", e.Number, e.Type.ToString()));
+                //HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(String.Join(" ", e.Floor,  e.Apartment, "sdaf", e.Room));
+                tmp = new TreeNode(String.Join(" ", e.Room, e.Type.ToString()));
                 tmp.Tag = e;
                 RoomNodes.Add(tmp);
             }
