@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace RoomAreaPlugin
 {
-    public partial class MainForm : Form
+    public partial class CoefficientSettingsForm : Form
     {
-        public MainForm()
+        public CoefficientSettingsForm()
         {
             InitializeComponent();
         }
@@ -20,12 +20,6 @@ namespace RoomAreaPlugin
         private void btnOk_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void btnCoefSettings_Click(object sender, EventArgs e)
-        {
-            CoefficientSettingsForm form = new CoefficientSettingsForm();
-            form.ShowDialog();
         }
     }
 }

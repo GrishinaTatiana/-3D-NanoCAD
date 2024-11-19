@@ -40,18 +40,18 @@
             this.chkGroupBy3 = new System.Windows.Forms.CheckBox();
             this.cmbNumFlat = new System.Windows.Forms.ComboBox();
             this.lblFloatParam = new System.Windows.Forms.Label();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.chkEnableStash = new System.Windows.Forms.CheckBox();
+            this.chkDisableCoefCalc = new System.Windows.Forms.CheckBox();
+            this.chkUseSysAreaParam = new System.Windows.Forms.CheckBox();
+            this.cmbIDK = new System.Windows.Forms.ComboBox();
             this.btnUnchkAll = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnUnshowAll = new System.Windows.Forms.Button();
             this.btnShowAll = new System.Windows.Forms.Button();
             this.btnInfo = new System.Windows.Forms.Button();
             this.cmbRoomType = new System.Windows.Forms.ComboBox();
             this.lblRoomType = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCoefSettings = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // chkGroupBy1
@@ -158,42 +158,42 @@
             this.lblFloatParam.TabIndex = 13;
             this.lblFloatParam.Text = "Знаков после запятой";
             // 
-            // checkBox4
+            // chkEnableStash
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(228, 125);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(172, 17);
-            this.checkBox4.TabIndex = 14;
-            this.checkBox4.Text = "Включить кладовые квартир";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.chkEnableStash.AutoSize = true;
+            this.chkEnableStash.Location = new System.Drawing.Point(228, 125);
+            this.chkEnableStash.Name = "chkEnableStash";
+            this.chkEnableStash.Size = new System.Drawing.Size(172, 17);
+            this.chkEnableStash.TabIndex = 14;
+            this.chkEnableStash.Text = "Включить кладовые квартир";
+            this.chkEnableStash.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // chkDisableCoefCalc
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(228, 148);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(186, 17);
-            this.checkBox5.TabIndex = 15;
-            this.checkBox5.Text = "Убрать расчёт коэффициентом";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.chkDisableCoefCalc.AutoSize = true;
+            this.chkDisableCoefCalc.Location = new System.Drawing.Point(228, 148);
+            this.chkDisableCoefCalc.Name = "chkDisableCoefCalc";
+            this.chkDisableCoefCalc.Size = new System.Drawing.Size(186, 17);
+            this.chkDisableCoefCalc.TabIndex = 15;
+            this.chkDisableCoefCalc.Text = "Убрать расчёт коэффициентом";
+            this.chkDisableCoefCalc.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // chkUseSysAreaParam
             // 
-            this.checkBox6.Location = new System.Drawing.Point(228, 171);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(186, 31);
-            this.checkBox6.TabIndex = 16;
-            this.checkBox6.Text = "Использовать системный параметр площади";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.chkUseSysAreaParam.Location = new System.Drawing.Point(228, 171);
+            this.chkUseSysAreaParam.Name = "chkUseSysAreaParam";
+            this.chkUseSysAreaParam.Size = new System.Drawing.Size(186, 31);
+            this.chkUseSysAreaParam.TabIndex = 16;
+            this.chkUseSysAreaParam.Text = "Использовать системный параметр площади";
+            this.chkUseSysAreaParam.UseVisualStyleBackColor = true;
             // 
-            // comboBox6
+            // cmbIDK
             // 
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(228, 208);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(185, 21);
-            this.comboBox6.TabIndex = 17;
+            this.cmbIDK.FormattingEnabled = true;
+            this.cmbIDK.Location = new System.Drawing.Point(228, 208);
+            this.cmbIDK.Name = "cmbIDK";
+            this.cmbIDK.Size = new System.Drawing.Size(185, 21);
+            this.cmbIDK.TabIndex = 17;
             // 
             // btnUnchkAll
             // 
@@ -204,14 +204,14 @@
             this.btnUnchkAll.Text = "Сбросить";
             this.btnUnchkAll.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnUnshowAll
             // 
-            this.button2.Location = new System.Drawing.Point(120, 377);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(99, 29);
-            this.button2.TabIndex = 23;
-            this.button2.Text = "Спрятать все";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnUnshowAll.Location = new System.Drawing.Point(120, 377);
+            this.btnUnshowAll.Name = "btnUnshowAll";
+            this.btnUnshowAll.Size = new System.Drawing.Size(99, 29);
+            this.btnUnshowAll.TabIndex = 23;
+            this.btnUnshowAll.Text = "Спрятать все";
+            this.btnUnshowAll.UseVisualStyleBackColor = true;
             // 
             // btnShowAll
             // 
@@ -257,15 +257,17 @@
             this.btnOk.TabIndex = 28;
             this.btnOk.Text = "ОК";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
-            // button1
+            // btnCoefSettings
             // 
-            this.button1.Location = new System.Drawing.Point(228, 235);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(148, 23);
-            this.button1.TabIndex = 29;
-            this.button1.Text = "Настройка коэффициента";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCoefSettings.Location = new System.Drawing.Point(228, 235);
+            this.btnCoefSettings.Name = "btnCoefSettings";
+            this.btnCoefSettings.Size = new System.Drawing.Size(148, 23);
+            this.btnCoefSettings.TabIndex = 29;
+            this.btnCoefSettings.Text = "Настройка коэффициента";
+            this.btnCoefSettings.UseVisualStyleBackColor = true;
+            this.btnCoefSettings.Click += new System.EventHandler(this.btnCoefSettings_Click);
             // 
             // MainForm
             // 
@@ -273,18 +275,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(426, 418);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnCoefSettings);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.cmbRoomType);
             this.Controls.Add(this.lblRoomType);
             this.Controls.Add(this.btnInfo);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnUnshowAll);
             this.Controls.Add(this.btnShowAll);
             this.Controls.Add(this.btnUnchkAll);
-            this.Controls.Add(this.comboBox6);
-            this.Controls.Add(this.checkBox6);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
+            this.Controls.Add(this.cmbIDK);
+            this.Controls.Add(this.chkUseSysAreaParam);
+            this.Controls.Add(this.chkDisableCoefCalc);
+            this.Controls.Add(this.chkEnableStash);
             this.Controls.Add(this.lblFloatParam);
             this.Controls.Add(this.cmbNumFlat);
             this.Controls.Add(this.cmbGroupBy3);
@@ -319,18 +321,18 @@
         private System.Windows.Forms.CheckBox chkGroupBy3;
         private System.Windows.Forms.ComboBox cmbNumFlat;
         private System.Windows.Forms.Label lblFloatParam;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.CheckBox chkEnableStash;
+        private System.Windows.Forms.CheckBox chkDisableCoefCalc;
+        private System.Windows.Forms.ComboBox cmbIDK;
         private System.Windows.Forms.Button btnUnchkAll;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnUnshowAll;
         private System.Windows.Forms.Button btnShowAll;
         private System.Windows.Forms.Button btnInfo;
         private System.Windows.Forms.ComboBox cmbRoomType;
         private System.Windows.Forms.Label lblRoomType;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox chkUseSysAreaParam;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCoefSettings;
     }
 }
 
