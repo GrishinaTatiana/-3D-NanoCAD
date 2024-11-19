@@ -19,13 +19,15 @@ namespace RoomAreaPlugin
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            this.Close();
+            CoefficientResultOutputForm secondForm = new CoefficientResultOutputForm();
+            secondForm.FormClosed += (s, args) => { if(secondForm.IsSaved) this.Close(); };
+            secondForm.ShowDialog();
         }
 
         private void btnCoefSettings_Click(object sender, EventArgs e)
         {
-            CoefficientSettingsForm form = new CoefficientSettingsForm();
-            form.ShowDialog();
+            CoefficientSettingsForm secondForm = new CoefficientSettingsForm();
+            secondForm.ShowDialog();
         }
     }
 }
