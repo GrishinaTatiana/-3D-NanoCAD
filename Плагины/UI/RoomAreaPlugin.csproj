@@ -46,11 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoefficientResultOutput.cs">
+    <Compile Include="CoefficientResultOutputForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CoefficientResultOutput.Designer.cs">
-      <DependentUpon>CoefficientResultOutput.cs</DependentUpon>
+    <Compile Include="CoefficientResultOutputForm.Designer.cs">
+      <DependentUpon>CoefficientResultOutputForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CoefficientSettingsForm.cs">
       <SubType>Form</SubType>
@@ -66,8 +66,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CoefficientResultOutput.resx">
-      <DependentUpon>CoefficientResultOutput.cs</DependentUpon>
+    <Compile Include="TreeViewLogic.cs" />
+    <EmbeddedResource Include="CoefficientResultOutputForm.resx">
+      <DependentUpon>CoefficientResultOutputForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CoefficientSettingsForm.resx">
       <DependentUpon>CoefficientSettingsForm.cs</DependentUpon>

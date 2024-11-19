@@ -66,6 +66,7 @@
             // 
             // trvRooms
             // 
+            this.trvRooms.CheckBoxes = true;
             this.trvRooms.Location = new System.Drawing.Point(12, 89);
             this.trvRooms.Name = "trvRooms";
             this.trvRooms.Size = new System.Drawing.Size(207, 242);
@@ -89,13 +90,16 @@
             this.btnCheckAll.TabIndex = 3;
             this.btnCheckAll.Text = "Выбрать все";
             this.btnCheckAll.UseVisualStyleBackColor = true;
+            this.btnCheckAll.Click += new System.EventHandler(this.btnCheckAll_Click);
             // 
             // txtbFloatParam
             // 
             this.txtbFloatParam.Location = new System.Drawing.Point(352, 99);
             this.txtbFloatParam.Name = "txtbFloatParam";
-            this.txtbFloatParam.Size = new System.Drawing.Size(24, 20);
+            this.txtbFloatParam.Size = new System.Drawing.Size(48, 20);
             this.txtbFloatParam.TabIndex = 4;
+            this.txtbFloatParam.Text = "2";
+            this.txtbFloatParam.TextChanged += new System.EventHandler(this.txtbFloatParam_TextChanged);
             // 
             // cmbGroupBy1
             // 
@@ -203,6 +207,7 @@
             this.btnUnchkAll.TabIndex = 21;
             this.btnUnchkAll.Text = "Сбросить";
             this.btnUnchkAll.UseVisualStyleBackColor = true;
+            this.btnUnchkAll.Click += new System.EventHandler(this.btnUnchkAll_Click);
             // 
             // btnUnshowAll
             // 
@@ -212,6 +217,7 @@
             this.btnUnshowAll.TabIndex = 23;
             this.btnUnshowAll.Text = "Спрятать все";
             this.btnUnshowAll.UseVisualStyleBackColor = true;
+            this.btnUnshowAll.Click += new System.EventHandler(this.btnUnshowAll_Click);
             // 
             // btnShowAll
             // 
@@ -221,6 +227,7 @@
             this.btnShowAll.TabIndex = 22;
             this.btnShowAll.Text = "Расскрыть все";
             this.btnShowAll.UseVisualStyleBackColor = true;
+            this.btnShowAll.Click += new System.EventHandler(this.btnShowAll_Click);
             // 
             // btnInfo
             // 
