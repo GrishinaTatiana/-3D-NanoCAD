@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.chkGroupBy1 = new System.Windows.Forms.CheckBox();
             this.trvRooms = new System.Windows.Forms.TreeView();
             this.lblNumFlat = new System.Windows.Forms.Label();
@@ -52,6 +53,8 @@
             this.lblRoomType = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCoefSettings = new System.Windows.Forms.Button();
+            this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // chkGroupBy1
@@ -126,6 +129,7 @@
             this.chkGroupBy2.TabIndex = 6;
             this.chkGroupBy2.Text = "Затем по";
             this.chkGroupBy2.UseVisualStyleBackColor = true;
+            this.chkGroupBy2.CheckedChanged += new System.EventHandler(this.chkGroupBy2_CheckedChanged);
             // 
             // cmbGroupBy3
             // 
@@ -276,6 +280,10 @@
             this.btnCoefSettings.UseVisualStyleBackColor = true;
             this.btnCoefSettings.Click += new System.EventHandler(this.btnCoefSettings_Click);
             // 
+            // mainFormBindingSource
+            // 
+            this.mainFormBindingSource.DataSource = typeof(RoomAreaPlugin.MainForm);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -309,6 +317,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Площади помещений";
+            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -317,7 +326,7 @@
         #endregion
 
         private System.Windows.Forms.CheckBox chkGroupBy1;
-        private System.Windows.Forms.TreeView trvRooms;
+        public System.Windows.Forms.TreeView trvRooms; //Тоже надо как то без публика
         private System.Windows.Forms.Label lblNumFlat;
         private System.Windows.Forms.Button btnCheckAll;
         private System.Windows.Forms.TextBox txtbFloatParam;
@@ -340,6 +349,7 @@
         private System.Windows.Forms.CheckBox chkUseSysAreaParam;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCoefSettings;
+        private System.Windows.Forms.BindingSource mainFormBindingSource;
     }
 }
 

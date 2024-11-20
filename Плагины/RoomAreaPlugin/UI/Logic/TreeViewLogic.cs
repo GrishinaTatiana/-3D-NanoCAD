@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,6 +11,50 @@ namespace RoomAreaPlugin
 {
     partial class Logic
     {
+        public static void UpdateTreeView(MainForm form, List<TreeNode> nodes, PropertyInfo property)
+        {
+            if (form.LastActiveNode == null)
+            {
+                nodes.ForEach(z => form.trvRooms.Nodes.Add(z));
+            }
+            else
+            {
+
+                foreach (var e in form.LastActiveNode)
+                    e.Nodes.Clear();
+
+                var tmp = nodes.Join(form.LastActiveNode, r => form.LastlyGroupedBy.GetValue(r.Tag), l => form.LastlyGroupedBy.GetValue(l.Tag), (r, l) => new { R = r, L = l });
+
+                foreach (var e in tmp)
+                    e.L.Nodes.Add(e.R);
+            }
+            form.LastlyGroupedBy = property;
+            if (nodes != NodeHelper.RoomNodes) form.LastActiveNode = nodes; //Тупость
+            form.trvRooms.Update();
+        }
+
+        public static void GroupByFloor(MainForm form)
+        {
+            UpdateTreeView(form, NodeHelper.FloorNodes, typeof(RoomInfo).GetProperty("Floor"));
+            GroupByRoom(form);
+        }
+
+        public static void GroupByApartment(MainForm form)
+        {
+            UpdateTreeView(form, NodeHelper.ApartmentNodes, typeof(RoomInfo).GetProperty("Apartment"));
+            GroupByRoom(form);
+        }
+
+        public static void GroupByType(MainForm form)
+        {
+            throw new NotImplementedException();
+            //UpdateTreeView(NodeHelper., typeof(RoomInfo).GetProperty("Type"));
+        }
+
+        public static void GroupByRoom(MainForm form)
+        {
+            UpdateTreeView(form, NodeHelper.RoomNodes, form.LastlyGroupedBy);
+        }
         // Рекурсивная функция для установки или сброса флажков
         public static void SetTreeViewNodesChecked(TreeNodeCollection nodes, bool isChecked)
         {
@@ -23,8 +68,22 @@ namespace RoomAreaPlugin
         }
 
         // Временная инициализация TreeView
-        public static void InitializeTreeView(TreeNodeCollection trvNodes)
+        public static void InitializeTreeView(MainForm form, TreeNodeCollection trvNodes)
         {
+            var room1 = new RoomInfo("floor 1", "Apartment 1", "Number 1", 1.0, ERoomType.Office);
+            var room2 = new RoomInfo("floor 1", "Apartment 1", "Number 2", 1.0, ERoomType.Office);
+            var room3 = new RoomInfo("floor 1", "Apartment 2", "Number 1", 1.0, ERoomType.Office);
+            var room4 = new RoomInfo("floor 2", "Apartment 3", "Number 1", 1.0, ERoomType.Office);
+            var room5 = new RoomInfo("floor 3", "Apartment 4", "Number 1", 1.0, ERoomType.Office);
+
+            var list = new List<RoomInfo>() { room1, room2, room3, room4, room5 };
+
+            form.UpdateListOfRooms(list);
+
+            GroupByFloor(form);
+            GroupByApartment(form);
+
+            /*
             // Создаем корневой узел с чекбоксом
             TreeNode rootNode1 = new TreeNode()
             {
@@ -96,6 +155,7 @@ namespace RoomAreaPlugin
 
             // Отображаем значения в TreeView
             UpdateTreeView(trvNodes, 2);
+            */
         }
             
         // Рекурсивное отображение элементов TreeView
