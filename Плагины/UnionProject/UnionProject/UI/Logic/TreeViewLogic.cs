@@ -1,60 +1,130 @@
-﻿using System;
+﻿using HostMgd.EditorInput;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Teigha.BoundaryRepresentation;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RoomAreaPlugin
 {
+    //Группировки ужасно неоптимизированны - переделать
     partial class Logic
     {
-        public static void UpdateTreeView(MainForm form, List<TreeNode> nodes, PropertyInfo property)
+        static List<TreeNode> RoomNodes;
+
+        public static void UpdateTreeView(MainForm form, List<TreeNode> nodes, string parameter)
         {
             if (form.LastActiveNode == null)
             {
                 nodes.ForEach(z => form.trvRooms.Nodes.Add(z));
+                if (nodes != RoomNodes) 
+                { 
+                    form.LastActiveNode = nodes;
+                    foreach (var item in nodes)
+                    {
+                        foreach (var e in ((List<RoomInfo>)item.Tag))
+                            item.Nodes.Add(RoomNodes.Where(z => ((RoomInfo)z.Tag) == e).First());
+                    }
+                }
             }
             else
             {
-
                 foreach (var e in form.LastActiveNode)
                     e.Nodes.Clear();
 
-                var tmp = nodes.Join(form.LastActiveNode, r => form.LastlyGroupedBy.GetValue(r.Tag), l => form.LastlyGroupedBy.GetValue(l.Tag), (r, l) => new { R = r, L = l });
+                var newNodes = new List<TreeNode>();
 
-                foreach (var e in tmp)
-                    e.L.Nodes.Add(e.R);
+                foreach(var e in form.LastActiveNode)
+                {
+                    if (((List<RoomInfo>)e.Tag).Count == 0)
+                        continue;
+                    foreach(var r in nodes)
+                    {
+                        var node = new TreeNode(r.Text);
+                        node.Tag = new List<RoomInfo>();
+                        foreach(var t in (List<RoomInfo>)r.Tag)
+                        {
+                            if (((List<RoomInfo>)e.Tag).First().Parameters[form.LastlyGroupedBy] == t.Parameters[form.LastlyGroupedBy])
+                            {
+                                ((List<RoomInfo>)node.Tag).Add(t);
+                                node.Nodes.Add(RoomNodes.Where(z => ((RoomInfo)z.Tag) == t  ).First());
+                            }
+                        }
+                        if (node.Nodes.Count == 0)
+                            continue;
+                        newNodes.Add(node);
+                        e.Nodes.Add(node);
+                    }
+                }
+                if (nodes != RoomNodes) form.LastActiveNode = newNodes;
             }
-            form.LastlyGroupedBy = property;
-            if (nodes != NodeHelper.RoomNodes) form.LastActiveNode = nodes; //Тупость
+            form.LastlyGroupedBy = parameter;
             form.trvRooms.Update();
         }
 
-        public static void GroupByFloor(MainForm form)
+        public static void GroupByParameter(MainForm form, string parameter)
         {
-            UpdateTreeView(form, NodeHelper.FloorNodes, typeof(RoomInfo).GetProperty("Floor"));
-            GroupByRoom(form);
+            var nodes = new List<TreeNode>();
+
+            var dict = new Dictionary<string, List<RoomInfo>>();
+
+            foreach (var e in form.ListOfRooms) 
+            {
+                if (!dict.ContainsKey(e.Parameters[parameter]))
+                    dict[e.Parameters[parameter]] = new List<RoomInfo>();
+                dict[e.Parameters[parameter]].Add(e);
+            }
+
+            foreach (var e in dict)
+            {
+                var node = new TreeNode(e.Key);
+                node.Tag = e.Value;
+                nodes.Add(node);
+            }
+
+
+            UpdateTreeView(form, nodes, parameter);
+
+            //GroupByRoom(form);
         }
 
-        public static void GroupByApartment(MainForm form)
+        public static void GetRoomNodes(MainForm form)
         {
-            UpdateTreeView(form, NodeHelper.ApartmentNodes, typeof(RoomInfo).GetProperty("Apartment"));
-            GroupByRoom(form);
-        }
-
-        public static void GroupByType(MainForm form)
-        {
-            throw new NotImplementedException();
-            //UpdateTreeView(NodeHelper., typeof(RoomInfo).GetProperty("Type"));
+            var nodes = new List<TreeNode>();
+            foreach (var e in form.ListOfRooms)
+            {
+                var node = new TreeNode(string.Join(" ", e.Apartment, e.Area.ToString(), e.Type.ToString()));
+                node.Tag = e;
+                nodes.Add(node);
+            }
+            RoomNodes = nodes;
         }
 
         public static void GroupByRoom(MainForm form)
         {
-            UpdateTreeView(form, NodeHelper.RoomNodes, form.LastlyGroupedBy);
+            if (RoomNodes == null)
+                GetRoomNodes(form);
+
+            UpdateTreeView(form, RoomNodes, form.LastlyGroupedBy);
         }
+
+        public static void UpdateGroupings(MainForm form)
+        {
+            form.LastActiveNode = null;
+            form.trvRooms.Nodes.Clear();
+            if (form.GroupingParameter1 != null && form.Grouping1)
+                GroupByParameter(form, form.GroupingParameter1);
+            if (form.GroupingParameter2 != null && form.Grouping2)
+                GroupByParameter(form, form.GroupingParameter2);
+            if (form.GroupingParameter3 != null && form.Grouping3)
+                GroupByParameter(form, form.GroupingParameter3);
+        }
+
+
         // Рекурсивная функция для установки или сброса флажков
         public static void SetTreeViewNodesChecked(TreeNodeCollection nodes, bool isChecked)
         {
@@ -67,9 +137,45 @@ namespace RoomAreaPlugin
             }
         }
 
+        public static HashSet<RoomInfo> GetCheckedNodes(TreeNodeCollection nodes)
+        {
+            var set = new HashSet<RoomInfo>();
+
+            foreach (TreeNode node in nodes)
+            {
+                if (node.Checked)
+                {
+                    if (node.Tag is RoomInfo)
+                    {
+                        set.Add((RoomInfo)node.Tag);
+                        Editor ed = HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
+                        ed.WriteMessage("JOapAAAAA");
+                    }
+
+                    if (node.Nodes.Count > 0)
+                        set.UnionWith(GetCheckedNodes(node.Nodes));
+                }
+            }
+            return set;
+        }
+
+        public static void CheckAllChildren(TreeNodeCollection nodes)
+        {
+            foreach (TreeNode child in nodes)
+            {
+                if (child.Parent != null)
+                {
+                    child.Checked = child.Parent.Checked;
+                }
+                if(child.Nodes.Count > 0)
+                    CheckAllChildren(child.Nodes);
+            }
+        }
+
         // Временная инициализация TreeView
         public static void InitializeTreeView(MainForm form, TreeNodeCollection trvNodes)
         {
+            /*
             var room1 = new RoomInfo("floor 1", "Apartment 1", "Number 1", 1.0, ERoomType.Office);
             var room2 = new RoomInfo("floor 1", "Apartment 1", "Number 2", 1.0, ERoomType.Office);
             var room3 = new RoomInfo("floor 1", "Apartment 2", "Number 1", 1.0, ERoomType.Office);
@@ -82,7 +188,7 @@ namespace RoomAreaPlugin
 
             GroupByFloor(form);
             GroupByApartment(form);
-
+            */
             /*
             // Создаем корневой узел с чекбоксом
             TreeNode rootNode1 = new TreeNode()
