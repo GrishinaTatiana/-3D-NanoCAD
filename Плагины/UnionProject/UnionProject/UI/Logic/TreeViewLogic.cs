@@ -74,9 +74,9 @@ namespace RoomAreaPlugin
 
             foreach (var e in form.ListOfRooms) 
             {
-                if (!dict.ContainsKey(e.Parameters[parameter]))
-                    dict[e.Parameters[parameter]] = new List<RoomInfo>();
-                dict[e.Parameters[parameter]].Add(e);
+                if (!dict.ContainsKey(e.Parameters[parameter].Value))
+                    dict[e.Parameters[parameter].Value] = new List<RoomInfo>();
+                dict[e.Parameters[parameter].Value].Add(e);
             }
 
             foreach (var e in dict)

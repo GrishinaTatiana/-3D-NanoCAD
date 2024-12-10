@@ -49,10 +49,10 @@ namespace RoomAreaNC
             return new RoomInfo(floor, apartment, number, area, type);
         }
         */
-
+        /*
         public static RoomInfo GetRoomInfo(SpaceEntity room)
         {
-            var info = new RoomInfo(room, double.Parse(room.GetElementData().Parameters.Where(z => z.Name == "AEC_ROOM_AREA").First().Value, System.Globalization.CultureInfo.InvariantCulture));
+            var info = new RoomInfo(double.Parse(room.GetElementData().Parameters.Where(z => z.Name == "AEC_ROOM_AREA").First().Value, System.Globalization.CultureInfo.InvariantCulture), room.GetElementData());
 
 
             var CurrentParameters = new HashSet<string>();
@@ -68,7 +68,7 @@ namespace RoomAreaNC
 
             return info;
         }
-
+        */
         /*
         [CommandMethod("RunAreaSumPluginSPDS")]
         public static void RunAreaSumPluginSPDS()
@@ -90,8 +90,8 @@ namespace RoomAreaNC
         [CommandMethod("RunAreaSumPluginBIM")]
         public static void RunAreaSumPluginBIM()
         {
+            RoomInfo.ResetParameters();
             var rooms = GetRoomsBim();
-
 
             var form = new MainForm();
             form.ChoseRooms += WriteEverything;
@@ -124,11 +124,11 @@ namespace RoomAreaNC
                     var room = id.GetObject(OpenMode.ForRead) as SpaceEntity;
 
                     if (room != null)
-                        result.Add(GetRoomInfo(room));
-
-                    foreach (var e in RoomInfo.SharedParameters)
-                        ed.WriteMessage(e);
+                        result.Add(new RoomInfo(room.GetElementData()));
                 }
+
+                foreach (var e in RoomInfo.SharedParameters)
+                    ed.WriteMessage(e);
             }
             return result; 
         } 
@@ -141,113 +141,72 @@ namespace RoomAreaNC
 
             ed.WriteMessage(rooms.Length.ToString());
 
-
-
-
-
             foreach (var r in rooms)
             {
                 if (CoefficientResultOutputForm.AreaCoef != null)
-                    ((SpaceEntity)r.RoomInDB).GetElementData().Parameters.
-                        Where(z => z.Name == CoefficientResultOutputForm.AreaCoef).
-                        First().Value = "0.0";
+                    r.Parameters[CoefficientResultOutputForm.AreaCoef].Value = "0.0";
+
                 if (CoefficientResultOutputForm.AreaWithCoef != null)
-                    ((SpaceEntity)r.RoomInDB).GetElementData().Parameters.
-                        Where(z => z.Name == CoefficientResultOutputForm.AreaWithCoef).
-                        First().Value = "0.0";
+                    r.Parameters[CoefficientResultOutputForm.AreaWithCoef].Value = "0.0";
+
                 if (CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff != null)
-                {
-                    var param = ((SpaceEntity)r.RoomInDB).GetElementData().Parameters.
-                        Where(z => z.Name == CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff).First();
-                    param.Value = "0.0";
-                }
+                    r.Parameters[CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff].Value = "0.0";
+
                 if (CoefficientResultOutputForm.FlatArea != null)
-                {
-                    var param = ((SpaceEntity)r.RoomInDB).GetElementData().Parameters.
-                        Where(z => z.Name == CoefficientResultOutputForm.FlatArea).First();
-                    param.Value = "0.0";
-                }
+                    r.Parameters[CoefficientResultOutputForm.FlatArea].Value = "0.0";
+
                 if (CoefficientResultOutputForm.FlatCount != null)
-                {
-                    var param = ((SpaceEntity)r.RoomInDB).GetElementData().Parameters.
-                        Where(z => z.Name == CoefficientResultOutputForm.FlatCount).First();
-                    param.Value = "0";
-                }
+                    r.Parameters[CoefficientResultOutputForm.FlatCount].Value = "0";
+
                 if (CoefficientResultOutputForm.GeneralFlatArea != null)
-                {
-                    var param = ((SpaceEntity)r.RoomInDB).GetElementData().Parameters.
-                        Where(z => z.Name == CoefficientResultOutputForm.GeneralFlatArea).First();
-                    param.Value = "0.0";
-                }
+                    r.Parameters[CoefficientResultOutputForm.GeneralFlatArea].Value = "0.0";
+                
                 if (CoefficientResultOutputForm.LiveFlatArea != null)
-                {
-                    var param = ((SpaceEntity)r.RoomInDB).GetElementData().Parameters.
-                        Where(z => z.Name == CoefficientResultOutputForm.LiveFlatArea).First();
-                    param.Value = "0.0";
-                }
+                    r.Parameters[CoefficientResultOutputForm.LiveFlatArea].Value = "0.0";
             }
 
             foreach (var r in rooms) 
             {
-
-
-
                 var apartment = rooms.Where(z => z.Apartment == r.Apartment);
 
                 if (CoefficientResultOutputForm.AreaCoef != null)
-                    ((SpaceEntity)r.RoomInDB).GetElementData().Parameters.
-                        Where(z => z.Name == CoefficientResultOutputForm.AreaCoef).
-                        First().Value =  form.DontUseCoeff? "1.0" : (form.UseSystemCoeff? MainForm.MultiplicatorsSystem[r.Type].ToString(CultureInfo.InvariantCulture) : MainForm.Multiplicators[r.Type].ToString(CultureInfo.InvariantCulture));
-
+                    r.Parameters[CoefficientResultOutputForm.AreaCoef].Value =  form.DontUseCoeff? "1.0" : (form.UseSystemCoeff? MainForm.MultiplicatorsSystem[r.Type].ToString(CultureInfo.InvariantCulture) : MainForm.Multiplicators[r.Type].ToString(CultureInfo.InvariantCulture));
 
                 if (CoefficientResultOutputForm.AreaWithCoef != null)
-                    ((SpaceEntity)r.RoomInDB).GetElementData().Parameters.
-                        Where(z => z.Name == CoefficientResultOutputForm.AreaWithCoef).
-                        First().Value = form.DontUseCoeff? r.Area.ToString(CultureInfo.InvariantCulture) : (form.UseSystemCoeff ? r.AreaWithSystemCoeff.ToString(CultureInfo.InvariantCulture) : r.AreaWithCoeff.ToString(CultureInfo.InvariantCulture));
-
+                    r.Parameters[CoefficientResultOutputForm.AreaWithCoef].Value = form.DontUseCoeff? r.Area.ToString(CultureInfo.InvariantCulture) : (form.UseSystemCoeff ? r.AreaWithSystemCoeff.ToString(CultureInfo.InvariantCulture) : r.AreaWithCoeff.ToString(CultureInfo.InvariantCulture));
 
                 if (CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff != null)
                 {
                     foreach(var e in apartment)
-                    {
-                        var param = ((SpaceEntity)e.RoomInDB).GetElementData().Parameters.
-                            Where(z => z.Name == CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff).First();
-                        ed.WriteMessage(param.Value);
-                        param.Value = (    double.Parse((param.Value == null ? "0.0" : param.Value), CultureInfo.InvariantCulture) + r.Area   ).ToString(CultureInfo.InvariantCulture);
-                    }
+                        e.Parameters[CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff].Value = 
+                            (double.Parse((e.Parameters[CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff].Value == null ? "0.0" : e.Parameters[CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff].Value), CultureInfo.InvariantCulture) + r.Area).ToString(CultureInfo.InvariantCulture);
                 }
-
 
                 if (CoefficientResultOutputForm.FlatArea != null && (r.Type == RoomType.ResidentialRoom || r.Type == RoomType.NonResidentialRoom)) 
                 {
                     foreach (var e in apartment)
                     {
-                        var param = ((SpaceEntity)e.RoomInDB).GetElementData().Parameters.
-                            Where(z => z.Name == CoefficientResultOutputForm.FlatArea).First();
+                        var param = e.Parameters[CoefficientResultOutputForm.FlatArea];
                         ed.WriteMessage(param.Value);
                         param.Value = (double.Parse( (param.Value == null? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff ? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff))).ToString(CultureInfo.InvariantCulture);
                     }
                 }
 
-
                 if (CoefficientResultOutputForm.FlatCount != null && r.Type == RoomType.ResidentialRoom)
                 {
                     foreach (var e in apartment)
                     {
-                        var param = ((SpaceEntity)e.RoomInDB).GetElementData().Parameters.
-                            Where(z => z.Name == CoefficientResultOutputForm.FlatCount).First();
+                        var param = e.Parameters[CoefficientResultOutputForm.FlatCount];
                         ed.WriteMessage(param.Value);
                         param.Value = (int.Parse(param.Value) + 1).ToString(CultureInfo.InvariantCulture);
                     }
                 }
 
-
                 if (CoefficientResultOutputForm.GeneralFlatArea != null)
                 {
                     foreach (var e in apartment)
                     {
-                        var param = ((SpaceEntity)e.RoomInDB).GetElementData().Parameters.
-                            Where(z => z.Name == CoefficientResultOutputForm.GeneralFlatArea).First();
+                        var param = e.Parameters[CoefficientResultOutputForm.GeneralFlatArea];
                         ed.WriteMessage(param.Value);
                         param.Value = (double.Parse((param.Value == null ? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff)) ).ToString(CultureInfo.InvariantCulture);
                     }
@@ -257,8 +216,7 @@ namespace RoomAreaNC
                 {
                     foreach (var e in apartment)
                     {
-                        var param = ((SpaceEntity)e.RoomInDB).GetElementData().Parameters.
-                            Where(z => z.Name == CoefficientResultOutputForm.LiveFlatArea).First();
+                        var param = e.Parameters[CoefficientResultOutputForm.LiveFlatArea];
                         ed.WriteMessage(param.Value);
                         param.Value = (double.Parse((param.Value == null ? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff ? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff))).ToString(CultureInfo.InvariantCulture);
                     }
