@@ -14,8 +14,7 @@ namespace RoomAreaPlugin
     //Группировки ужасно неоптимизированны - переделать
     partial class Logic
     {
-        static List<TreeNode> RoomNodes;
-
+        /*
         public static void UpdateTreeView(MainForm form, List<TreeNode> nodes, string parameter)
         {
             if (form.LastActiveNode == null)
@@ -65,7 +64,8 @@ namespace RoomAreaPlugin
             form.LastlyGroupedBy = parameter;
             form.trvRooms.Update();
         }
-
+        */
+        /*
         public static void GroupByParameter(MainForm form, string parameter)
         {
             var nodes = new List<TreeNode>();
@@ -91,27 +91,61 @@ namespace RoomAreaPlugin
 
             //GroupByRoom(form);
         }
-
-        public static void GetRoomNodes(MainForm form)
+        */
+        public static void GroupByParameters(MainForm form, List<string> parameters)
         {
-            var nodes = new List<TreeNode>();
-            foreach (var e in form.ListOfRooms)
+            form.trvRooms.Nodes.Clear();
+
+
+            if (parameters.Count > 0)
             {
-                var node = new TreeNode(string.Join(" ", e.Apartment, e.Area.ToString(), e.Type.ToString()));
-                node.Tag = e;
-                nodes.Add(node);
+                var RootDict = new Dictionary<string, TreeNode>();
+
+
+                foreach (var room in form.ListOfRooms)
+                {
+                    if (!RootDict.ContainsKey(room.Parameters[parameters[0]].Value))
+                    {
+                        RootDict[room.Parameters[parameters[0]].Value] = new TreeNode(room.Parameters[parameters[0]].Value);
+                        form.trvRooms.Nodes.Add(RootDict[room.Parameters[parameters[0]].Value]);
+                    }
+                    var node = RootDict[room.Parameters[parameters[0]].Value];
+
+                    for (int i = 1; i < parameters.Count; i++)
+                    {
+                        if(node.Tag == null)
+                            node.Tag = new Dictionary<string, TreeNode>();
+
+                        var dict = (Dictionary<string, TreeNode>)node.Tag;
+
+                        if (!dict.ContainsKey(room.Parameters[parameters[i]].Value))
+                        {
+                            dict[room.Parameters[parameters[i]].Value] = new TreeNode(room.Parameters[parameters[i]].Value);
+                            node.Nodes.Add(dict[room.Parameters[parameters[i]].Value]);
+                        }
+
+                        node = dict[room.Parameters[parameters[i]].Value];
+                    }
+
+
+                    var roomNode = new TreeNode(string.Join(" ", room.Apartment, room.Area.ToString("N" + MainForm.NumAftComma.ToString()), room.Type.ToString()));
+                    roomNode.Tag = room;
+                    node.Nodes.Add(roomNode);
+                }
             }
-            RoomNodes = nodes;
+            else
+            {
+                foreach(var room in form.ListOfRooms)
+                {
+                    var roomNode = new TreeNode(string.Join(" ", room.Apartment, room.Area.ToString("N" + MainForm.NumAftComma.ToString()), room.Type.ToString()));
+                    roomNode.Tag = room;
+                    form.trvRooms.Nodes.Add(roomNode);
+                }
+            }
         }
 
-        public static void GroupByRoom(MainForm form)
-        {
-            if (RoomNodes == null)
-                GetRoomNodes(form);
 
-            UpdateTreeView(form, RoomNodes, form.LastlyGroupedBy);
-        }
-
+        /*
         public static void UpdateGroupings(MainForm form)
         {
             form.LastActiveNode = null;
@@ -123,7 +157,7 @@ namespace RoomAreaPlugin
             if (form.GroupingParameter3 != null && form.Grouping3)
                 GroupByParameter(form, form.GroupingParameter3);
         }
-
+        */
 
         // Рекурсивная функция для установки или сброса флажков
         public static void SetTreeViewNodesChecked(TreeNodeCollection nodes, bool isChecked)
@@ -265,19 +299,5 @@ namespace RoomAreaPlugin
         }
             
         // Рекурсивное отображение элементов TreeView
-        public static void UpdateTreeView(TreeNodeCollection trvNodes, int decimalPlaces)
-        {
-            // Обновляем значения в TreeView с учетом формата
-            foreach (TreeNode node in trvNodes)
-            {
-                if (node.Tag != null)
-                {
-                    double value = (double)node.Tag;
-                    node.Text = value.ToString("F" + decimalPlaces);
-                }
-
-                UpdateTreeView(node.Nodes, decimalPlaces);
-            }
-        }
     }
 }

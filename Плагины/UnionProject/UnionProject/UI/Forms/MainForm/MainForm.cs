@@ -22,6 +22,8 @@ namespace RoomAreaPlugin
         public bool Grouping2 { get; private set; }
         public bool Grouping3 { get; private set; }
 
+        public static int NumAftComma = 2;
+
 
         public static readonly Dictionary<RoomType, double> MultiplicatorsSystem = new Dictionary<RoomType, double>()
         {
@@ -61,11 +63,13 @@ namespace RoomAreaPlugin
         public MainForm()
         {
             InitializeComponent();
+            numericUpDown1.Value = NumAftComma;
         }
 
 
         void SendRooms()
         {
+            NumAftComma = (int)numericUpDown1.Value;
             var rooms = Logic.GetCheckedNodes(trvRooms.Nodes);
             ChoseRooms(rooms.ToArray(), this);
         }
@@ -92,13 +96,6 @@ namespace RoomAreaPlugin
 
         private void btnUnshowAll_Click(object sender, EventArgs e) => trvRooms.CollapseAll();
         #endregion
-
-        private void txtbFloatParam_TextChanged(object sender, EventArgs e)
-        {
-            int decimalPlaces = 0;
-            _ = int.TryParse(txtbFloatParam.Text, out decimalPlaces);
-            Logic.UpdateTreeView(trvRooms.Nodes, decimalPlaces);
-        }
 
 
         /// <summary>
@@ -136,16 +133,14 @@ namespace RoomAreaPlugin
             foreach (var e in RoomInfo.SharedParameters)
                 cmbGroupBy3.Items.Add(e);
 
-            Logic.GetRoomNodes(this);
-            Logic.GroupByRoom(this);
-
-            //NodeHelper.UpdateNodes(rooms); // Доставать ноды отсюда и пихать их в зависмости от группировки Более неактуально
+            UpdateTreeView();
+            CoefficientResultOutputForm.UpdateParameters(RoomInfo.SharedParameters);
         }
 
         private void chkGroupBy2_CheckedChanged(object sender, EventArgs e)
         {
             Grouping2 = !Grouping2;
-            Logic.UpdateGroupings(this);
+            UpdateTreeView();
         }
 
         private void cmbNumFlat_SelectedIndexChanged(object sender, EventArgs e)
@@ -154,8 +149,7 @@ namespace RoomAreaPlugin
             {
                 item.ChangeApartmentParameter(cmbNumFlat.Text);
             }
-            Logic.GetRoomNodes(this);
-            Logic.UpdateGroupings(this);
+            UpdateTreeView();
         }
 
         private void cmbRoomType_SelectedIndexChanged(object sender, EventArgs e)
@@ -164,44 +158,42 @@ namespace RoomAreaPlugin
             {
                 item.ChangeTypeParameter(cmbRoomType.Text);
             }
-            Logic.GetRoomNodes(this);
-            Logic.UpdateGroupings(this);
+            UpdateTreeView();
         }
 
         private void cmbGroupBy1_SelectedIndexChanged(object sender, EventArgs e)
         {
             GroupingParameter1 = cmbGroupBy1.Text;
-            Logic.UpdateGroupings(this);
+            UpdateTreeView();
         }
 
         private void cmbGroupBy2_SelectedIndexChanged(object sender, EventArgs e)
         {
             GroupingParameter2 = cmbGroupBy2.Text;
-            Logic.UpdateGroupings(this);
+            UpdateTreeView();
         }
 
         private void cmbGroupBy3_SelectedIndexChanged(object sender, EventArgs e)
         {
             GroupingParameter3 = cmbGroupBy3.Text;
-            Logic.UpdateGroupings(this);
+            UpdateTreeView();
         }
 
         private void chkGroupBy1_CheckedChanged_1(object sender, EventArgs e)
         {
             Grouping1 = !Grouping1;
-            Logic.UpdateGroupings(this);
+            UpdateTreeView();
         }
 
         private void chkGroupBy3_CheckedChanged_1(object sender, EventArgs e)
         {
             Grouping3 = !Grouping3;
-            Logic.UpdateGroupings(this);
+            UpdateTreeView();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             var form = new CoefficientResultOutputForm();
-            form.UpdateParameters(RoomInfo.SharedParameters);
             form.ShowDialog();
         }
 
@@ -212,8 +204,28 @@ namespace RoomAreaPlugin
 
         private void trvRooms_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            if(e.Action != TreeViewAction.Unknown) 
+            if (e.Action != TreeViewAction.Unknown)
                 Logic.CheckAllChildren(trvRooms.Nodes);
         }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            NumAftComma = (int)numericUpDown1.Value;
+            UpdateTreeView();
+        }
+
+        void UpdateTreeView()
+        {
+            var parameters = new List<string>();
+            if (GroupingParameter1 != null && Grouping1)
+                parameters.Add(GroupingParameter1);
+            if (GroupingParameter2 != null && Grouping2)
+                parameters.Add(GroupingParameter2);
+            if (GroupingParameter3 != null && Grouping3)
+                parameters.Add(GroupingParameter3);
+            Logic.GroupByParameters(this, parameters);
+        }
+
+
     }
 }

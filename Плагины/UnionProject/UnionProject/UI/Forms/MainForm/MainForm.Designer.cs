@@ -33,7 +33,6 @@
             trvRooms = new TreeView();
             lblNumFlat = new Label();
             btnCheckAll = new Button();
-            txtbFloatParam = new TextBox();
             cmbGroupBy1 = new ComboBox();
             cmbGroupBy2 = new ComboBox();
             chkGroupBy2 = new CheckBox();
@@ -48,14 +47,15 @@
             btnUnchkAll = new Button();
             btnUnshowAll = new Button();
             btnShowAll = new Button();
-            btnInfo = new Button();
             cmbRoomType = new ComboBox();
             lblRoomType = new Label();
             btnOk = new Button();
             btnCoefSettings = new Button();
             mainFormBindingSource = new BindingSource(components);
             button1 = new Button();
+            numericUpDown1 = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)mainFormBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
             // 
             // chkGroupBy1
@@ -101,16 +101,6 @@
             btnCheckAll.Text = "Выбрать все";
             btnCheckAll.UseVisualStyleBackColor = true;
             btnCheckAll.Click += btnCheckAll_Click;
-            // 
-            // txtbFloatParam
-            // 
-            txtbFloatParam.Location = new Point(411, 114);
-            txtbFloatParam.Margin = new Padding(4, 3, 4, 3);
-            txtbFloatParam.Name = "txtbFloatParam";
-            txtbFloatParam.Size = new Size(55, 23);
-            txtbFloatParam.TabIndex = 4;
-            txtbFloatParam.Text = "2";
-            txtbFloatParam.TextChanged += txtbFloatParam_TextChanged;
             // 
             // cmbGroupBy1
             // 
@@ -261,16 +251,6 @@
             btnShowAll.UseVisualStyleBackColor = true;
             btnShowAll.Click += btnShowAll_Click;
             // 
-            // btnInfo
-            // 
-            btnInfo.Location = new Point(262, 435);
-            btnInfo.Margin = new Padding(4, 3, 4, 3);
-            btnInfo.Name = "btnInfo";
-            btnInfo.Size = new Size(37, 33);
-            btnInfo.TabIndex = 24;
-            btnInfo.Text = "i";
-            btnInfo.UseVisualStyleBackColor = true;
-            // 
             // cmbRoomType
             // 
             cmbRoomType.FormattingEnabled = true;
@@ -328,18 +308,27 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // numericUpDown1
+            // 
+            numericUpDown1.Location = new Point(397, 115);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(53, 23);
+            numericUpDown1.TabIndex = 31;
+            numericUpDown1.Value = new decimal(new int[] { 2, 0, 0, 0 });
+            numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(497, 482);
+            Controls.Add(numericUpDown1);
             Controls.Add(button1);
             Controls.Add(btnCoefSettings);
             Controls.Add(btnOk);
             Controls.Add(cmbRoomType);
             Controls.Add(lblRoomType);
-            Controls.Add(btnInfo);
             Controls.Add(btnUnshowAll);
             Controls.Add(btnShowAll);
             Controls.Add(btnUnchkAll);
@@ -354,7 +343,6 @@
             Controls.Add(cmbGroupBy2);
             Controls.Add(chkGroupBy2);
             Controls.Add(cmbGroupBy1);
-            Controls.Add(txtbFloatParam);
             Controls.Add(btnCheckAll);
             Controls.Add(lblNumFlat);
             Controls.Add(trvRooms);
@@ -364,6 +352,7 @@
             Name = "MainForm";
             Text = "Площади помещений";
             ((System.ComponentModel.ISupportInitialize)mainFormBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -374,7 +363,6 @@
         public System.Windows.Forms.TreeView trvRooms; //Тоже надо как то без публика
         private System.Windows.Forms.Label lblNumFlat;
         private System.Windows.Forms.Button btnCheckAll;
-        private System.Windows.Forms.TextBox txtbFloatParam;
         private System.Windows.Forms.ComboBox cmbGroupBy1;
         private System.Windows.Forms.ComboBox cmbGroupBy2;
         private System.Windows.Forms.CheckBox chkGroupBy2;
@@ -388,7 +376,6 @@
         private System.Windows.Forms.Button btnUnchkAll;
         private System.Windows.Forms.Button btnUnshowAll;
         private System.Windows.Forms.Button btnShowAll;
-        private System.Windows.Forms.Button btnInfo;
         private System.Windows.Forms.ComboBox cmbRoomType;
         private System.Windows.Forms.Label lblRoomType;
         private System.Windows.Forms.CheckBox chkUseSysAreaParam;
@@ -396,6 +383,7 @@
         private System.Windows.Forms.Button btnCoefSettings;
         private System.Windows.Forms.BindingSource mainFormBindingSource;
         private Button button1;
+        private NumericUpDown numericUpDown1;
     }
 }
 

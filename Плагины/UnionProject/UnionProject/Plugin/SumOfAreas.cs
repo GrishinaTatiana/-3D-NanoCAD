@@ -18,75 +18,6 @@ namespace RoomAreaNC
 {
     public static class AreasSum
     { 
-        /*
-        public static List<RoomInfo> GetRooms()
-        {
-            HostMgd.ApplicationServices.Document doc =
-                     HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-
-            var rooms = ObjectFilter.Create().AddType(McRoom.TypeID).GetObjects()
-                .Select(a => McObjectManager.GetObject(a).Cast<McRoom>());
-
-            var result = new List<RoomInfo>();
-
-            foreach (var e in rooms)
-                result.Add(GetRoomInfo(e));
-
-            return result;
-        }
-
-        public static RoomInfo GetRoomInfo(McRoom room)
-        {
-            var tmp = room.Number.Split(';').Select(z => z.Trim()).ToArray();
-
-            var number = room.Number;
-            var apartment = room.Appartment;
-            var floor = room.Floor;
-            var area = room.Area;
-
-            var type = GetRoomType(room.Category);
-
-            return new RoomInfo(floor, apartment, number, area, type);
-        }
-        */
-        /*
-        public static RoomInfo GetRoomInfo(SpaceEntity room)
-        {
-            var info = new RoomInfo(double.Parse(room.GetElementData().Parameters.Where(z => z.Name == "AEC_ROOM_AREA").First().Value, System.Globalization.CultureInfo.InvariantCulture), room.GetElementData());
-
-
-            var CurrentParameters = new HashSet<string>();
-
-            foreach (var item in room.GetElementData().Parameters)
-            {
-                CurrentParameters.Add(item.Name);
-                info.Parameters[item.Name] = item.Value;
-            }
-            if (RoomInfo.SharedParameters.Count == 0)
-                RoomInfo.SharedParameters = CurrentParameters;
-            RoomInfo.SharedParameters.IntersectWith(CurrentParameters);
-
-            return info;
-        }
-        */
-        /*
-        [CommandMethod("RunAreaSumPluginSPDS")]
-        public static void RunAreaSumPluginSPDS()
-        {
-            var rooms = GetRooms();
-
-            var form = new MainForm();
-            form.ChoseRooms += CalculateArea;
-            form.UpdateListOfRooms(rooms);
-
-            HostMgd.ApplicationServices.Application.ShowModalDialog(form);
-
-            NodeHelper.FloorNodes.ForEach(z => HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(string.Join(" ","Floor", z.Text)));
-            NodeHelper.ApartmentNodes.ForEach(z => HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(string.Join(" ","Apartment", z.Text)));
-            NodeHelper.RoomNodes.ForEach(z => HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage(string.Join(" ", "Number", z.Text)));
-        }
-        */
-
         [CommandMethod("RunAreaSumPluginBIM")]
         public static void RunAreaSumPluginBIM()
         {
@@ -179,7 +110,7 @@ namespace RoomAreaNC
                 {
                     foreach(var e in apartment)
                         e.Parameters[CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff].Value = 
-                            (double.Parse((e.Parameters[CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff].Value == null ? "0.0" : e.Parameters[CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff].Value), CultureInfo.InvariantCulture) + r.Area).ToString(CultureInfo.InvariantCulture);
+                            (double.Parse((e.Parameters[CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff].Value == null ? "0.0" : e.Parameters[CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff].Value), CultureInfo.InvariantCulture) + r.Area).ToString("N" + MainForm.NumAftComma.ToString(), CultureInfo.InvariantCulture);
                 }
 
                 if (CoefficientResultOutputForm.FlatArea != null && (r.Type == RoomType.ResidentialRoom || r.Type == RoomType.NonResidentialRoom)) 
@@ -188,7 +119,7 @@ namespace RoomAreaNC
                     {
                         var param = e.Parameters[CoefficientResultOutputForm.FlatArea];
                         ed.WriteMessage(param.Value);
-                        param.Value = (double.Parse( (param.Value == null? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff ? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff))).ToString(CultureInfo.InvariantCulture);
+                        param.Value = (double.Parse( (param.Value == null? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff ? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff))).ToString("N" + MainForm.NumAftComma.ToString(), CultureInfo.InvariantCulture);
                     }
                 }
 
@@ -208,7 +139,7 @@ namespace RoomAreaNC
                     {
                         var param = e.Parameters[CoefficientResultOutputForm.GeneralFlatArea];
                         ed.WriteMessage(param.Value);
-                        param.Value = (double.Parse((param.Value == null ? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff)) ).ToString(CultureInfo.InvariantCulture);
+                        param.Value = (double.Parse((param.Value == null ? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff)) ).ToString("N" + MainForm.NumAftComma.ToString(), CultureInfo.InvariantCulture);
                     }
                 }
 
@@ -218,7 +149,7 @@ namespace RoomAreaNC
                     {
                         var param = e.Parameters[CoefficientResultOutputForm.LiveFlatArea];
                         ed.WriteMessage(param.Value);
-                        param.Value = (double.Parse((param.Value == null ? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff ? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff))).ToString(CultureInfo.InvariantCulture);
+                        param.Value = (double.Parse((param.Value == null ? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff ? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff))).ToString("N" + MainForm.NumAftComma.ToString(), CultureInfo.InvariantCulture);
                     }
                 }
             }

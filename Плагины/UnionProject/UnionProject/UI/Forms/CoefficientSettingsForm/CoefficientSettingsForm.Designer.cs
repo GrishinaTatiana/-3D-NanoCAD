@@ -28,180 +28,196 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnOk = new System.Windows.Forms.Button();
-            this.lblResidential = new System.Windows.Forms.Label();
-            this.txtbResidential = new System.Windows.Forms.TextBox();
-            this.lblPublicSpaces = new System.Windows.Forms.Label();
-            this.txtbPublicSpaces = new System.Windows.Forms.TextBox();
-            this.lblNonResidential = new System.Windows.Forms.Label();
-            this.txtbNonResidential = new System.Windows.Forms.TextBox();
-            this.lblLoggias = new System.Windows.Forms.Label();
-            this.txtbLoggias = new System.Windows.Forms.TextBox();
-            this.lblBalconies = new System.Windows.Forms.Label();
-            this.txtbBalconies = new System.Windows.Forms.TextBox();
-            this.lblOffices = new System.Windows.Forms.Label();
-            this.txtbOffices = new System.Windows.Forms.TextBox();
-            this.lblWarmLoggias = new System.Windows.Forms.Label();
-            this.txtbWarmLoggias = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
+            btnOk = new Button();
+            lblResidential = new Label();
+            txtbResidential = new TextBox();
+            lblPublicSpaces = new Label();
+            txtbPublicSpaces = new TextBox();
+            lblNonResidential = new Label();
+            txtbNonResidential = new TextBox();
+            lblLoggias = new Label();
+            txtbLoggias = new TextBox();
+            lblBalconies = new Label();
+            txtbBalconies = new TextBox();
+            lblOffices = new Label();
+            txtbOffices = new TextBox();
+            lblWarmLoggias = new Label();
+            txtbWarmLoggias = new TextBox();
+            SuspendLayout();
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(251, 191);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(99, 29);
-            this.btnOk.TabIndex = 29;
-            this.btnOk.Text = "ОК";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            btnOk.Location = new Point(293, 220);
+            btnOk.Margin = new Padding(4, 3, 4, 3);
+            btnOk.Name = "btnOk";
+            btnOk.Size = new Size(115, 33);
+            btnOk.TabIndex = 29;
+            btnOk.Text = "ОК";
+            btnOk.UseVisualStyleBackColor = true;
+            btnOk.Click += btnOk_Click;
             // 
             // lblResidential
             // 
-            this.lblResidential.AutoSize = true;
-            this.lblResidential.Location = new System.Drawing.Point(12, 9);
-            this.lblResidential.Name = "lblResidential";
-            this.lblResidential.Size = new System.Drawing.Size(158, 13);
-            this.lblResidential.TabIndex = 33;
-            this.lblResidential.Text = "Жилые помещения квартиры";
+            lblResidential.AutoSize = true;
+            lblResidential.Location = new Point(14, 10);
+            lblResidential.Margin = new Padding(4, 0, 4, 0);
+            lblResidential.Name = "lblResidential";
+            lblResidential.Size = new Size(172, 15);
+            lblResidential.TabIndex = 33;
+            lblResidential.Text = "Жилые помещения квартиры";
             // 
             // txtbResidential
             // 
-            this.txtbResidential.Location = new System.Drawing.Point(251, 9);
-            this.txtbResidential.Name = "txtbResidential";
-            this.txtbResidential.Size = new System.Drawing.Size(99, 20);
-            this.txtbResidential.TabIndex = 32;
-            this.txtbResidential.Text = "1";
+            txtbResidential.Location = new Point(293, 10);
+            txtbResidential.Margin = new Padding(4, 3, 4, 3);
+            txtbResidential.Name = "txtbResidential";
+            txtbResidential.Size = new Size(115, 23);
+            txtbResidential.TabIndex = 32;
+            txtbResidential.Text = "1.0";
+            txtbResidential.TextChanged += txtbResidential_TextChanged;
             // 
             // lblPublicSpaces
             // 
-            this.lblPublicSpaces.AutoSize = true;
-            this.lblPublicSpaces.Location = new System.Drawing.Point(12, 116);
-            this.lblPublicSpaces.Name = "lblPublicSpaces";
-            this.lblPublicSpaces.Size = new System.Drawing.Size(233, 13);
-            this.lblPublicSpaces.TabIndex = 35;
-            this.lblPublicSpaces.Text = "Нежилые помещения, общественные (МОП)";
+            lblPublicSpaces.AutoSize = true;
+            lblPublicSpaces.Location = new Point(14, 134);
+            lblPublicSpaces.Margin = new Padding(4, 0, 4, 0);
+            lblPublicSpaces.Name = "lblPublicSpaces";
+            lblPublicSpaces.Size = new Size(258, 15);
+            lblPublicSpaces.TabIndex = 35;
+            lblPublicSpaces.Text = "Нежилые помещения, общественные (МОП)";
             // 
             // txtbPublicSpaces
             // 
-            this.txtbPublicSpaces.Location = new System.Drawing.Point(251, 113);
-            this.txtbPublicSpaces.Name = "txtbPublicSpaces";
-            this.txtbPublicSpaces.Size = new System.Drawing.Size(99, 20);
-            this.txtbPublicSpaces.TabIndex = 34;
-            this.txtbPublicSpaces.Text = "1";
+            txtbPublicSpaces.Location = new Point(293, 130);
+            txtbPublicSpaces.Margin = new Padding(4, 3, 4, 3);
+            txtbPublicSpaces.Name = "txtbPublicSpaces";
+            txtbPublicSpaces.Size = new Size(115, 23);
+            txtbPublicSpaces.TabIndex = 34;
+            txtbPublicSpaces.Text = "1.0";
             // 
             // lblNonResidential
             // 
-            this.lblNonResidential.AutoSize = true;
-            this.lblNonResidential.Location = new System.Drawing.Point(12, 35);
-            this.lblNonResidential.Name = "lblNonResidential";
-            this.lblNonResidential.Size = new System.Drawing.Size(169, 13);
-            this.lblNonResidential.TabIndex = 37;
-            this.lblNonResidential.Text = "Нежилые помещения квартиры";
+            lblNonResidential.AutoSize = true;
+            lblNonResidential.Location = new Point(14, 40);
+            lblNonResidential.Margin = new Padding(4, 0, 4, 0);
+            lblNonResidential.Name = "lblNonResidential";
+            lblNonResidential.Size = new Size(185, 15);
+            lblNonResidential.TabIndex = 37;
+            lblNonResidential.Text = "Нежилые помещения квартиры";
             // 
             // txtbNonResidential
             // 
-            this.txtbNonResidential.Location = new System.Drawing.Point(251, 35);
-            this.txtbNonResidential.Name = "txtbNonResidential";
-            this.txtbNonResidential.Size = new System.Drawing.Size(99, 20);
-            this.txtbNonResidential.TabIndex = 36;
-            this.txtbNonResidential.Text = "1";
+            txtbNonResidential.Location = new Point(293, 40);
+            txtbNonResidential.Margin = new Padding(4, 3, 4, 3);
+            txtbNonResidential.Name = "txtbNonResidential";
+            txtbNonResidential.Size = new Size(115, 23);
+            txtbNonResidential.TabIndex = 36;
+            txtbNonResidential.Text = "1.0";
             // 
             // lblLoggias
             // 
-            this.lblLoggias.AutoSize = true;
-            this.lblLoggias.Location = new System.Drawing.Point(12, 61);
-            this.lblLoggias.Name = "lblLoggias";
-            this.lblLoggias.Size = new System.Drawing.Size(47, 13);
-            this.lblLoggias.TabIndex = 39;
-            this.lblLoggias.Text = "Лоджии";
+            lblLoggias.AutoSize = true;
+            lblLoggias.Location = new Point(14, 70);
+            lblLoggias.Margin = new Padding(4, 0, 4, 0);
+            lblLoggias.Name = "lblLoggias";
+            lblLoggias.Size = new Size(51, 15);
+            lblLoggias.TabIndex = 39;
+            lblLoggias.Text = "Лоджии";
             // 
             // txtbLoggias
             // 
-            this.txtbLoggias.Location = new System.Drawing.Point(251, 61);
-            this.txtbLoggias.Name = "txtbLoggias";
-            this.txtbLoggias.Size = new System.Drawing.Size(99, 20);
-            this.txtbLoggias.TabIndex = 38;
-            this.txtbLoggias.Text = "0.5";
+            txtbLoggias.Location = new Point(293, 70);
+            txtbLoggias.Margin = new Padding(4, 3, 4, 3);
+            txtbLoggias.Name = "txtbLoggias";
+            txtbLoggias.Size = new Size(115, 23);
+            txtbLoggias.TabIndex = 38;
+            txtbLoggias.Text = "0.5";
             // 
             // lblBalconies
             // 
-            this.lblBalconies.AutoSize = true;
-            this.lblBalconies.Location = new System.Drawing.Point(12, 87);
-            this.lblBalconies.Name = "lblBalconies";
-            this.lblBalconies.Size = new System.Drawing.Size(103, 13);
-            this.lblBalconies.TabIndex = 41;
-            this.lblBalconies.Text = "Балконы, Террасы";
+            lblBalconies.AutoSize = true;
+            lblBalconies.Location = new Point(14, 100);
+            lblBalconies.Margin = new Padding(4, 0, 4, 0);
+            lblBalconies.Name = "lblBalconies";
+            lblBalconies.Size = new Size(109, 15);
+            lblBalconies.TabIndex = 41;
+            lblBalconies.Text = "Балконы, Террасы";
             // 
             // txtbBalconies
             // 
-            this.txtbBalconies.Location = new System.Drawing.Point(251, 87);
-            this.txtbBalconies.Name = "txtbBalconies";
-            this.txtbBalconies.Size = new System.Drawing.Size(99, 20);
-            this.txtbBalconies.TabIndex = 40;
-            this.txtbBalconies.Text = "0.3";
+            txtbBalconies.Location = new Point(293, 100);
+            txtbBalconies.Margin = new Padding(4, 3, 4, 3);
+            txtbBalconies.Name = "txtbBalconies";
+            txtbBalconies.Size = new Size(115, 23);
+            txtbBalconies.TabIndex = 40;
+            txtbBalconies.Text = "0.3";
             // 
             // lblOffices
             // 
-            this.lblOffices.AutoSize = true;
-            this.lblOffices.Location = new System.Drawing.Point(12, 142);
-            this.lblOffices.Name = "lblOffices";
-            this.lblOffices.Size = new System.Drawing.Size(43, 13);
-            this.lblOffices.TabIndex = 43;
-            this.lblOffices.Text = "Офисы";
+            lblOffices.AutoSize = true;
+            lblOffices.Location = new Point(14, 164);
+            lblOffices.Margin = new Padding(4, 0, 4, 0);
+            lblOffices.Name = "lblOffices";
+            lblOffices.Size = new Size(47, 15);
+            lblOffices.TabIndex = 43;
+            lblOffices.Text = "Офисы";
             // 
             // txtbOffices
             // 
-            this.txtbOffices.Location = new System.Drawing.Point(251, 139);
-            this.txtbOffices.Name = "txtbOffices";
-            this.txtbOffices.Size = new System.Drawing.Size(99, 20);
-            this.txtbOffices.TabIndex = 42;
-            this.txtbOffices.Text = "1";
+            txtbOffices.Location = new Point(293, 160);
+            txtbOffices.Margin = new Padding(4, 3, 4, 3);
+            txtbOffices.Name = "txtbOffices";
+            txtbOffices.Size = new Size(115, 23);
+            txtbOffices.TabIndex = 42;
+            txtbOffices.Text = "1.0";
             // 
             // lblWarmLoggias
             // 
-            this.lblWarmLoggias.AutoSize = true;
-            this.lblWarmLoggias.Location = new System.Drawing.Point(12, 168);
-            this.lblWarmLoggias.Name = "lblWarmLoggias";
-            this.lblWarmLoggias.Size = new System.Drawing.Size(87, 13);
-            this.lblWarmLoggias.TabIndex = 45;
-            this.lblWarmLoggias.Text = "Тёплые лоджии";
+            lblWarmLoggias.AutoSize = true;
+            lblWarmLoggias.Location = new Point(14, 194);
+            lblWarmLoggias.Margin = new Padding(4, 0, 4, 0);
+            lblWarmLoggias.Name = "lblWarmLoggias";
+            lblWarmLoggias.Size = new Size(94, 15);
+            lblWarmLoggias.TabIndex = 45;
+            lblWarmLoggias.Text = "Тёплые лоджии";
             // 
             // txtbWarmLoggias
             // 
-            this.txtbWarmLoggias.Location = new System.Drawing.Point(251, 165);
-            this.txtbWarmLoggias.Name = "txtbWarmLoggias";
-            this.txtbWarmLoggias.Size = new System.Drawing.Size(99, 20);
-            this.txtbWarmLoggias.TabIndex = 44;
-            this.txtbWarmLoggias.Text = "1";
+            txtbWarmLoggias.Location = new Point(293, 190);
+            txtbWarmLoggias.Margin = new Padding(4, 3, 4, 3);
+            txtbWarmLoggias.Name = "txtbWarmLoggias";
+            txtbWarmLoggias.Size = new Size(115, 23);
+            txtbWarmLoggias.TabIndex = 44;
+            txtbWarmLoggias.Text = "1.0";
             // 
             // CoefficientSettingsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(362, 232);
-            this.Controls.Add(this.lblWarmLoggias);
-            this.Controls.Add(this.txtbWarmLoggias);
-            this.Controls.Add(this.lblOffices);
-            this.Controls.Add(this.txtbOffices);
-            this.Controls.Add(this.lblBalconies);
-            this.Controls.Add(this.txtbBalconies);
-            this.Controls.Add(this.lblLoggias);
-            this.Controls.Add(this.txtbLoggias);
-            this.Controls.Add(this.lblNonResidential);
-            this.Controls.Add(this.txtbNonResidential);
-            this.Controls.Add(this.lblPublicSpaces);
-            this.Controls.Add(this.txtbPublicSpaces);
-            this.Controls.Add(this.lblResidential);
-            this.Controls.Add(this.txtbResidential);
-            this.Controls.Add(this.btnOk);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "CoefficientSettingsForm";
-            this.Text = "Настройка коэффициента";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ClientSize = new Size(422, 268);
+            Controls.Add(lblWarmLoggias);
+            Controls.Add(txtbWarmLoggias);
+            Controls.Add(lblOffices);
+            Controls.Add(txtbOffices);
+            Controls.Add(lblBalconies);
+            Controls.Add(txtbBalconies);
+            Controls.Add(lblLoggias);
+            Controls.Add(txtbLoggias);
+            Controls.Add(lblNonResidential);
+            Controls.Add(txtbNonResidential);
+            Controls.Add(lblPublicSpaces);
+            Controls.Add(txtbPublicSpaces);
+            Controls.Add(lblResidential);
+            Controls.Add(txtbResidential);
+            Controls.Add(btnOk);
+            Margin = new Padding(4, 3, 4, 3);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "CoefficientSettingsForm";
+            Text = "Настройка коэффициента";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,20 +24,14 @@ namespace RoomAreaPlugin
         public static string GeneralFlatArea { get; private set; }
         public static string LiveFlatArea { get; private set; }
 
+        static HashSet<string> Parameters;
+
 
         public CoefficientResultOutputForm()
         {
             InitializeComponent();
-        }
 
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-            IsSaved = true;
-            this.Close();
-        }
-
-        public void UpdateParameters(HashSet<string> parameters)
-        {
+            /*
             cmbAreaCoef.Items.Clear();
             cmbAreaWithCoef.Items.Clear();
             cmbFlatAreaWtBalcAndLogWoCoeff.Items.Clear();
@@ -44,7 +39,8 @@ namespace RoomAreaPlugin
             cmbFlatCount.Items.Clear();
             cmbGeneralFlatArea.Items.Clear();
             cmbLiveFlatArea.Items.Clear();
-            foreach (var e in parameters)
+            */
+            foreach (var e in Parameters)
             {
                 cmbAreaCoef.Items.Add(e);
                 cmbAreaWithCoef.Items.Add(e);
@@ -54,6 +50,40 @@ namespace RoomAreaPlugin
                 cmbGeneralFlatArea.Items.Add(e);
                 cmbLiveFlatArea.Items.Add(e);
             }
+             
+            if(AreaCoef != null)
+                cmbAreaCoef.SelectedIndex = cmbAreaCoef.FindString(AreaCoef);
+            if(AreaWithCoef != null)
+                cmbAreaWithCoef.SelectedIndex = cmbAreaWithCoef.FindString(AreaWithCoef);
+            if(FlatAreaWtBalcAndLogWoCoeff != null)
+                cmbFlatAreaWtBalcAndLogWoCoeff.SelectedIndex = cmbFlatAreaWtBalcAndLogWoCoeff.FindString(FlatAreaWtBalcAndLogWoCoeff);
+            if(FlatArea != null)
+                cmbFlatArea.SelectedIndex = cmbFlatArea.FindString(FlatArea);
+            if(FlatCount != null)
+                cmbFlatCount.SelectedIndex = cmbFlatCount.FindString(FlatCount);
+            if(GeneralFlatArea != null)
+                cmbGeneralFlatArea.SelectedIndex = cmbGeneralFlatArea.FindString(GeneralFlatArea);
+            if(LiveFlatArea != null)
+                cmbLiveFlatArea.SelectedIndex = cmbLiveFlatArea.FindString(LiveFlatArea);
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            IsSaved = true;
+            this.Close();
+        }
+
+        public static void UpdateParameters(HashSet<string> parameters)
+        {
+            AreaCoef = null;
+            AreaWithCoef = null;
+            FlatAreaWtBalcAndLogWoCoeff = null;
+            FlatArea = null;
+            FlatCount = null;
+            GeneralFlatArea = null;
+            LiveFlatArea = null;
+
+            Parameters = parameters;
         }
 
         private void cmbAreaCoef_SelectedIndexChanged(object sender, EventArgs e)
