@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="hostdbmgd">
+      <HintPath>..\..\..\..\..\..\Desktop\СДК НАНОКАД  24\include-x64\hostdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="hostmgd">
+      <HintPath>..\..\..\..\..\..\Desktop\СДК НАНОКАД  24\include-x64\hostmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MapiBaseTypes">
+      <HintPath>..\..\..\..\..\..\Desktop\СДК НАНОКАД  24\include-x64\mapibasetypes.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mapimgd">
+      <HintPath>..\..\..\..\..\..\Desktop\СДК НАНОКАД  24\include-x64\mapimgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ncBIMSmgd">
+      <HintPath>..\..\..\..\..\..\Desktop\СДК БИМ\include-x64\ncBIMSmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NrxGateMgd">
+      <HintPath>..\..\..\..\..\..\Desktop\СДК НАНОКАД  24\include-x64\nrxgatemgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
