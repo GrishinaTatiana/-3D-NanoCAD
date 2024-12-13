@@ -14,9 +14,9 @@ namespace RoomAreaPlugin
 {
     public partial class MainForm : Form
     {
-        public string GroupingParameter1 { get; private set; }
-        public string GroupingParameter2 { get; private set; }
-        public string GroupingParameter3 { get; private set; }
+        public string ?GroupingParameter1 { get; private set; }
+        public string ?GroupingParameter2 { get; private set; }
+        public string ?GroupingParameter3 { get; private set; }
 
         public bool Grouping1 { get; private set; }
         public bool Grouping2 { get; private set; }
@@ -52,9 +52,6 @@ namespace RoomAreaPlugin
         public delegate void Calculate(RoomInfo[] rooms, MainForm form);
         public event Calculate ChoseRooms;
 
-        public List<TreeNode> LastActiveNode; //плохо, наверное заменить позже
-        public string LastlyGroupedBy;
-
         public List<RoomInfo> ListOfRooms;
 
         public bool UseSystemCoeff { get; private set; } = false;
@@ -79,11 +76,6 @@ namespace RoomAreaPlugin
         {
             SendRooms();
             this.Close();
-            /*
-            CoefficientResultOutputForm secondForm = new CoefficientResultOutputForm();
-            secondForm.FormClosed += (s, args) => { if (CoefficientResultOutputForm.IsSaved){ SendRooms(); this.Close(); } };
-            secondForm.ShowDialog();
-            */
         }
 
         private void btnCoefSettings_Click(object sender, EventArgs e) => new CoefficientSettingsForm().ShowDialog();
@@ -106,32 +98,20 @@ namespace RoomAreaPlugin
         {
             ListOfRooms = rooms;
 
-            trvRooms.Nodes.Clear();
-
             cmbNumFlat.Items.Clear();
-
-            foreach (var e in RoomInfo.SharedParameters)
-                cmbNumFlat.Items.Add(e);
-
             cmbRoomType.Items.Clear();
-
-            foreach (var e in RoomInfo.SharedParameters)
-                cmbRoomType.Items.Add(e);
-
             cmbGroupBy1.Items.Clear();
-
-            foreach (var e in RoomInfo.SharedParameters)
-                cmbGroupBy1.Items.Add(e);
-
             cmbGroupBy2.Items.Clear();
-
-            foreach (var e in RoomInfo.SharedParameters)
-                cmbGroupBy2.Items.Add(e);
-
             cmbGroupBy3.Items.Clear();
 
             foreach (var e in RoomInfo.SharedParameters)
+            {
+                cmbNumFlat.Items.Add(e);
+                cmbRoomType.Items.Add(e);
+                cmbGroupBy1.Items.Add(e);
+                cmbGroupBy2.Items.Add(e);
                 cmbGroupBy3.Items.Add(e);
+            }
 
             UpdateTreeView();
             CoefficientResultOutputForm.UpdateParameters(RoomInfo.SharedParameters);
@@ -202,10 +182,10 @@ namespace RoomAreaPlugin
             UseSystemCoeff = !UseSystemCoeff;
         }
 
-        private void trvRooms_AfterCheck(object sender, TreeViewEventArgs e)
+        private void trvRooms_AfterCheck(object sender, TreeViewEventArgs e) 
         {
             if (e.Action != TreeViewAction.Unknown)
-                Logic.CheckAllChildren(trvRooms.Nodes);
+                Logic.CheckAllChildren(e.Node);
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -225,7 +205,5 @@ namespace RoomAreaPlugin
                 parameters.Add(GroupingParameter3);
             Logic.GroupByParameters(this, parameters);
         }
-
-
     }
 }

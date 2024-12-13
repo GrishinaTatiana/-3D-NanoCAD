@@ -31,15 +31,6 @@ namespace RoomAreaPlugin
         {
             InitializeComponent();
 
-            /*
-            cmbAreaCoef.Items.Clear();
-            cmbAreaWithCoef.Items.Clear();
-            cmbFlatAreaWtBalcAndLogWoCoeff.Items.Clear();
-            cmbFlatArea.Items.Clear();
-            cmbFlatCount.Items.Clear();
-            cmbGeneralFlatArea.Items.Clear();
-            cmbLiveFlatArea.Items.Clear();
-            */
             foreach (var e in Parameters)
             {
                 cmbAreaCoef.Items.Add(e);
@@ -89,22 +80,16 @@ namespace RoomAreaPlugin
         private void cmbAreaCoef_SelectedIndexChanged(object sender, EventArgs e)
         {
             AreaCoef = (string)cmbAreaCoef.Items[cmbAreaCoef.SelectedIndex];
-            Editor ed = HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
-            ed.WriteMessage(AreaCoef);
         }
 
         private void cmbAreaWithCoef_SelectedIndexChanged(object sender, EventArgs e)
         {
             AreaWithCoef = (string)cmbAreaWithCoef.Items[cmbAreaWithCoef.SelectedIndex];
-            Editor ed = HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
-            ed.WriteMessage(AreaWithCoef);
         }
 
         private void cmbLiveFlatArea_SelectedIndexChanged(object sender, EventArgs e)
         {
             LiveFlatArea = (string)cmbLiveFlatArea.Items[cmbLiveFlatArea.SelectedIndex];
-            Editor ed = HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
-            ed.WriteMessage(LiveFlatArea);
         }
 
         private void cmbFlatArea_SelectedIndexChanged(object sender, EventArgs e)

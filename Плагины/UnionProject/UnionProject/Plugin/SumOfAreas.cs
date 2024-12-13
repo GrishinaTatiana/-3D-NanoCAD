@@ -31,7 +31,7 @@ namespace RoomAreaNC
             HostMgd.ApplicationServices.Application.ShowModalDialog(form);
         }
 
-        public static List<RoomInfo> GetRoomsBim() //Ужасно 
+        public static List<RoomInfo> GetRoomsBim()
         {
             Document curDoc = HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
 
@@ -50,27 +50,21 @@ namespace RoomAreaNC
                 {
                     ObjectId id = enumerator.Current;
 
-                    ed.WriteMessage(id.ObjectClass.Name);
-
                     var room = id.GetObject(OpenMode.ForRead) as SpaceEntity;
 
                     if (room != null)
                         result.Add(new RoomInfo(room.GetElementData()));
                 }
-
-                foreach (var e in RoomInfo.SharedParameters)
-                    ed.WriteMessage(e);
             }
             return result; 
         } 
 
-        public static void WriteEverything(RoomInfo[] rooms, MainForm form) //Заглушка
+        public static void WriteEverything(RoomInfo[] rooms, MainForm form)
         {
             Document curDoc = HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
             Database db = curDoc.Database;
             Editor ed = HostMgd.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor; 
 
-            ed.WriteMessage(rooms.Length.ToString());
 
             foreach (var r in rooms)
             {
@@ -118,7 +112,6 @@ namespace RoomAreaNC
                     foreach (var e in apartment)
                     {
                         var param = e.Parameters[CoefficientResultOutputForm.FlatArea];
-                        ed.WriteMessage(param.Value);
                         param.Value = (double.Parse( (param.Value == null? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff ? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff))).ToString("N" + MainForm.NumAftComma.ToString(), CultureInfo.InvariantCulture);
                     }
                 }
@@ -128,7 +121,6 @@ namespace RoomAreaNC
                     foreach (var e in apartment)
                     {
                         var param = e.Parameters[CoefficientResultOutputForm.FlatCount];
-                        ed.WriteMessage(param.Value);
                         param.Value = (int.Parse(param.Value) + 1).ToString(CultureInfo.InvariantCulture);
                     }
                 }
@@ -138,7 +130,6 @@ namespace RoomAreaNC
                     foreach (var e in apartment)
                     {
                         var param = e.Parameters[CoefficientResultOutputForm.GeneralFlatArea];
-                        ed.WriteMessage(param.Value);
                         param.Value = (double.Parse((param.Value == null ? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff)) ).ToString("N" + MainForm.NumAftComma.ToString(), CultureInfo.InvariantCulture);
                     }
                 }
@@ -148,7 +139,6 @@ namespace RoomAreaNC
                     foreach (var e in apartment)
                     {
                         var param = e.Parameters[CoefficientResultOutputForm.LiveFlatArea];
-                        ed.WriteMessage(param.Value);
                         param.Value = (double.Parse((param.Value == null ? "0.0" : param.Value), CultureInfo.InvariantCulture) + (form.DontUseCoeff ? r.Area : (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff))).ToString("N" + MainForm.NumAftComma.ToString(), CultureInfo.InvariantCulture);
                     }
                 }

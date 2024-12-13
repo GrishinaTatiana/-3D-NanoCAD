@@ -40,10 +40,8 @@
             chkGroupBy3 = new CheckBox();
             cmbNumFlat = new ComboBox();
             lblFloatParam = new Label();
-            chkEnableStash = new CheckBox();
             chkDisableCoefCalc = new CheckBox();
             chkUseSysAreaParam = new CheckBox();
-            cmbIDK = new ComboBox();
             btnUnchkAll = new Button();
             btnUnshowAll = new Button();
             btnShowAll = new Button();
@@ -176,17 +174,6 @@
             lblFloatParam.TabIndex = 13;
             lblFloatParam.Text = "Знаков после запятой";
             // 
-            // chkEnableStash
-            // 
-            chkEnableStash.AutoSize = true;
-            chkEnableStash.Location = new Point(266, 144);
-            chkEnableStash.Margin = new Padding(4, 3, 4, 3);
-            chkEnableStash.Name = "chkEnableStash";
-            chkEnableStash.Size = new Size(184, 19);
-            chkEnableStash.TabIndex = 14;
-            chkEnableStash.Text = "Включить кладовые квартир";
-            chkEnableStash.UseVisualStyleBackColor = true;
-            // 
             // chkDisableCoefCalc
             // 
             chkDisableCoefCalc.AutoSize = true;
@@ -208,15 +195,6 @@
             chkUseSysAreaParam.Text = "Использовать системный параметр площади";
             chkUseSysAreaParam.UseVisualStyleBackColor = true;
             chkUseSysAreaParam.CheckedChanged += chkUseSysAreaParam_CheckedChanged;
-            // 
-            // cmbIDK
-            // 
-            cmbIDK.FormattingEnabled = true;
-            cmbIDK.Location = new Point(266, 240);
-            cmbIDK.Margin = new Padding(4, 3, 4, 3);
-            cmbIDK.Name = "cmbIDK";
-            cmbIDK.Size = new Size(215, 23);
-            cmbIDK.TabIndex = 17;
             // 
             // btnUnchkAll
             // 
@@ -332,10 +310,8 @@
             Controls.Add(btnUnshowAll);
             Controls.Add(btnShowAll);
             Controls.Add(btnUnchkAll);
-            Controls.Add(cmbIDK);
             Controls.Add(chkUseSysAreaParam);
             Controls.Add(chkDisableCoefCalc);
-            Controls.Add(chkEnableStash);
             Controls.Add(lblFloatParam);
             Controls.Add(cmbNumFlat);
             Controls.Add(cmbGroupBy3);
@@ -370,9 +346,7 @@
         private System.Windows.Forms.CheckBox chkGroupBy3;
         private System.Windows.Forms.ComboBox cmbNumFlat;
         private System.Windows.Forms.Label lblFloatParam;
-        private System.Windows.Forms.CheckBox chkEnableStash;
         private System.Windows.Forms.CheckBox chkDisableCoefCalc;
-        private System.Windows.Forms.ComboBox cmbIDK;
         private System.Windows.Forms.Button btnUnchkAll;
         private System.Windows.Forms.Button btnUnshowAll;
         private System.Windows.Forms.Button btnShowAll;
