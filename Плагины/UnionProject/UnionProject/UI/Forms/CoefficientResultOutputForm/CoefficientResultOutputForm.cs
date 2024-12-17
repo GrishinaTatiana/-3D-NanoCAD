@@ -66,20 +66,13 @@ namespace RoomAreaPlugin
 
         public static void UpdateParameters(HashSet<string> parameters)
         {
-            if(!parameters.Contains(AreaCoef))
-                AreaCoef = null;
-            if(!parameters.Contains(AreaWithCoef))
-                AreaWithCoef = null;
-            if(!parameters.Contains(FlatAreaWtBalcAndLogWoCoeff))
-                FlatAreaWtBalcAndLogWoCoeff = null;
-            if(!parameters.Contains(FlatArea))
-                FlatArea = null;
-            if(!parameters.Contains(FlatCount))
-                FlatCount = null;
-            if(!parameters.Contains(GeneralFlatArea))
-                GeneralFlatArea = null;
-            if(!parameters.Contains(LiveFlatArea))
-                LiveFlatArea = null;
+            AreaCoef = null;
+            AreaWithCoef = null;
+            FlatAreaWtBalcAndLogWoCoeff = null;
+            FlatArea = null;
+            FlatCount = null;
+            GeneralFlatArea = null;
+            LiveFlatArea = null;
 
             Parameters = parameters;
         }

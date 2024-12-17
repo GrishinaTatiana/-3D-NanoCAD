@@ -184,7 +184,6 @@
             chkDisableCoefCalc.TabIndex = 15;
             chkDisableCoefCalc.Text = "Убрать расчёт коэффициентом";
             chkDisableCoefCalc.UseVisualStyleBackColor = true;
-            chkDisableCoefCalc.CheckedChanged += chkDisableCoefCalc_CheckedChanged;
             // 
             // chkUseSysAreaParam
             // 

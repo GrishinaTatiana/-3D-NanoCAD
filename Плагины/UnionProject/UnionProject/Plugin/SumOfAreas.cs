@@ -98,7 +98,7 @@ namespace RoomAreaNC
                     r.Parameters[CoefficientResultOutputForm.AreaCoef].Value =  form.DontUseCoeff? "1.0" : (form.UseSystemCoeff? MainForm.MultiplicatorsSystem[r.Type].ToString(CultureInfo.InvariantCulture) : MainForm.Multiplicators[r.Type].ToString(CultureInfo.InvariantCulture));
 
                 if (CoefficientResultOutputForm.AreaWithCoef != null)
-                    r.Parameters[CoefficientResultOutputForm.AreaWithCoef].Value = (form.DontUseCoeff? r.Area: (form.UseSystemCoeff ? r.AreaWithSystemCoeff : r.AreaWithCoeff)).ToString("N" + MainForm.NumAftComma.ToString(), CultureInfo.InvariantCulture);
+                    r.Parameters[CoefficientResultOutputForm.AreaWithCoef].Value = form.DontUseCoeff? r.Area.ToString(CultureInfo.InvariantCulture) : (form.UseSystemCoeff ? r.AreaWithSystemCoeff.ToString(CultureInfo.InvariantCulture) : r.AreaWithCoeff.ToString(CultureInfo.InvariantCulture));
 
                 if (CoefficientResultOutputForm.FlatAreaWtBalcAndLogWoCoeff != null)
                 {

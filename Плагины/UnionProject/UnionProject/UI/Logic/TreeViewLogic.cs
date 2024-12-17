@@ -77,18 +77,6 @@ namespace RoomAreaPlugin
             }
         }
 
-        public static void UpdateRoomText(TreeNodeCollection nodes)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.Tag is RoomInfo room)
-                    node.Text = string.Join(" ", room.Apartment, room.Area.ToString("N" + MainForm.NumAftComma.ToString()), room.Type.ToString());
-                else
-                    UpdateRoomText(node.Nodes);
-            }
-
-        }
-
         public static HashSet<RoomInfo> GetCheckedNodes(TreeNodeCollection nodes)
         {
             var set = new HashSet<RoomInfo>();

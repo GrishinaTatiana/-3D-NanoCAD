@@ -14,9 +14,9 @@ namespace RoomAreaPlugin
 {
     public partial class MainForm : Form
     {
-        public string? GroupingParameter1 { get; private set; }
-        public string? GroupingParameter2 { get; private set; }
-        public string? GroupingParameter3 { get; private set; }
+        public string ?GroupingParameter1 { get; private set; }
+        public string ?GroupingParameter2 { get; private set; }
+        public string ?GroupingParameter3 { get; private set; }
 
         public bool Grouping1 { get; private set; }
         public bool Grouping2 { get; private set; }
@@ -113,11 +113,6 @@ namespace RoomAreaPlugin
                 cmbGroupBy3.Items.Add(e);
             }
 
-            if (RoomInfo.TypeParam != null && RoomInfo.SharedParameters.Contains(RoomInfo.TypeParam))
-                cmbRoomType.SelectedIndex = cmbRoomType.FindString(RoomInfo.TypeParam);
-            if (RoomInfo.ApartmentParam != null && RoomInfo.SharedParameters.Contains(RoomInfo.ApartmentParam))
-                cmbNumFlat.SelectedIndex = cmbNumFlat.FindString(RoomInfo.ApartmentParam);
-
             UpdateTreeView();
             CoefficientResultOutputForm.UpdateParameters(RoomInfo.SharedParameters);
         }
@@ -130,14 +125,20 @@ namespace RoomAreaPlugin
 
         private void cmbNumFlat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RoomInfo.ChangeApartmentParameter(cmbNumFlat.Text);
-            Logic.UpdateRoomText(trvRooms.Nodes);
+            foreach (var item in ListOfRooms)
+            {
+                item.ChangeApartmentParameter(cmbNumFlat.Text);
+            }
+            UpdateTreeView();
         }
 
         private void cmbRoomType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RoomInfo.ChangeTypeParameter(cmbRoomType.Text);
-            Logic.UpdateRoomText(trvRooms.Nodes);
+            foreach (var item in ListOfRooms)
+            {
+                item.ChangeTypeParameter(cmbRoomType.Text);
+            }
+            UpdateTreeView();
         }
 
         private void cmbGroupBy1_SelectedIndexChanged(object sender, EventArgs e)
@@ -178,10 +179,10 @@ namespace RoomAreaPlugin
 
         private void chkUseSysAreaParam_CheckedChanged(object sender, EventArgs e)
         {
-            UseSystemCoeff = chkUseSysAreaParam.Checked;
+            UseSystemCoeff = !UseSystemCoeff;
         }
 
-        private void trvRooms_AfterCheck(object sender, TreeViewEventArgs e)
+        private void trvRooms_AfterCheck(object sender, TreeViewEventArgs e) 
         {
             if (e.Action != TreeViewAction.Unknown)
                 Logic.CheckAllChildren(e.Node);
@@ -190,7 +191,7 @@ namespace RoomAreaPlugin
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             NumAftComma = (int)numericUpDown1.Value;
-            Logic.UpdateRoomText(trvRooms.Nodes);
+            UpdateTreeView();
         }
 
         void UpdateTreeView()
@@ -203,11 +204,6 @@ namespace RoomAreaPlugin
             if (GroupingParameter3 != null && Grouping3)
                 parameters.Add(GroupingParameter3);
             Logic.GroupByParameters(this, parameters);
-        }
-
-        private void chkDisableCoefCalc_CheckedChanged(object sender, EventArgs e)
-        {
-            DontUseCoeff = chkDisableCoefCalc.Checked;
         }
     }
 }
