@@ -6,9 +6,9 @@ namespace RoomAreaPlugin
 {
     public class RoomInfo
     {
-        public string ?Apartment { get; private set; }
+        public string Apartment => ApartmentParam == null? "" : Parameters[ApartmentParam].Value;
         public double Area { get; private set; }
-        public RoomType Type { get; private set; }
+        public RoomType Type => TypeParam == null? RoomType.Invalid : RoomTypeHelper.GetRoomType(Parameters[TypeParam].Value.Trim());
 
         public static HashSet<string> SharedParameters { get; private set; } = new HashSet<string>();
 
@@ -17,6 +17,9 @@ namespace RoomAreaPlugin
         public double AreaWithCoeff => Area * MainForm.Multiplicators[Type];
 
         public double AreaWithSystemCoeff => Area * MainForm.MultiplicatorsSystem[Type];
+
+        public static string ?ApartmentParam {  get; private set; }
+        public static string ?TypeParam { get; private set; }
 
         public RoomInfo(ElementData data)
         {
@@ -35,14 +38,14 @@ namespace RoomAreaPlugin
             SharedParameters.IntersectWith(CurrentParameters);
         }
 
-        public void ChangeTypeParameter(string parameter)
+        public static void ChangeTypeParameter(string parameter)
         {  
-            Type = RoomTypeHelper.GetRoomType(Parameters[parameter].Value.Trim());
+            TypeParam = parameter;
         }
 
-        public void ChangeApartmentParameter(string parameter)
+        public static void ChangeApartmentParameter(string parameter)
         {
-            Apartment = Parameters[parameter].Value;
+            ApartmentParam = parameter;
         }
 
         public static void ResetParameters()
