@@ -211,6 +211,7 @@
             Controls.Add(lblResidential);
             Controls.Add(txtbResidential);
             Controls.Add(btnOk);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;

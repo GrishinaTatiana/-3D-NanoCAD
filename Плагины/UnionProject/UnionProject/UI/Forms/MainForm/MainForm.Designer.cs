@@ -324,6 +324,7 @@
             Controls.Add(lblNumFlat);
             Controls.Add(trvRooms);
             Controls.Add(chkGroupBy1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             Name = "MainForm";

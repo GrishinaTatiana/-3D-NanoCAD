@@ -222,6 +222,7 @@
             Controls.Add(cmbAreaCoef);
             Controls.Add(lblAreaCoef);
             Controls.Add(btnOk);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
